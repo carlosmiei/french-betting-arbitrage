@@ -52,10 +52,10 @@ async def check_competition(competition):
     print("Checking competition: {}".format(competition))
     results = await asyncio.gather(
         get_competition_games("kineko", kineko, competition),
-        get_competition_games("sportsbetio", sportsbetio, competition),
+        # get_competition_games("sportsbetio", sportsbetio, competition),  exactly the same as stake
         get_competition_games("trustdice", trustdice, competition),
         get_competition_games("betplay", betplay, competition),
-        get_competition_games("jackbit", jackbit, competition),
+        # get_competition_games("jackbit", jackbit, competition), exactly the same as freshbet
         get_competition_games("freshbet", freshbet, competition),
         get_competition_games("stake", stake, competition),
     )
@@ -113,7 +113,7 @@ async def main():
             print("Check finished in {:.2f} seconds".format(after - before))
         except:
             log.log("Final Error: {}".format(traceback.format_exc()))
-        time.sleep(10)
+        time.sleep(5)
 
 
 asyncio.run(main())
