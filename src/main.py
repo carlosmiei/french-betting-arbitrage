@@ -4,62 +4,99 @@ import bookmakers.betclic as betclic
 import bookmakers.zebet as zebet
 import bookmakers.netbet as netbet
 import bookmakers.ps3838 as ps3838
+import bookmakers.stake as stake
+import bookmakers.freshbet as freshbet
+import bookmakers.jackbit as jackbit
+import bookmakers.betplay as betplay
+import bookmakers.trustdice as trustdice
+import bookmakers.sportsbetio as sportsbetio
+import bookmakers.kineko as kineko
 import arb
 import sys
 import log
 import config
 import traceback
+import time
+import asyncio
 
-# print(ps3838.get_games({'competition': 'nba', 'sport': 'basketball'}))
-# exit(0)
 log.init()
 
-progress = 0
-for competition in config.competitions:
-	progress += 1
-	bookmakers = {}
-	try:
-		bookmakers['winamax'] = winamax.get_games(competition)
-		log.log("winamax: " + str(bookmakers['winamax']))
-	except:
-		log.log("Cannot crawl winamax: " + traceback.format_exc())
-	try:
-		bookmakers['pmu'] = pmu.get_games(competition)
-		log.log("pmu: " + str(bookmakers['pmu']))
-	except:
-		log.log("Cannot crawl pmu: " + traceback.format_exc())
-	try:
-		bookmakers['betclic'] = betclic.get_games(competition)
-		log.log("betclic: " + str(bookmakers['betclic']))
-	except:
-		log.log("Cannot crawl betclic: " + traceback.format_exc())
-	try:
-		bookmakers['zebet'] = zebet.get_games(competition)
-		log.log("zebet: " + str(bookmakers['zebet']))
-	except:
-		log.log("Cannot crawl zebet: " + traceback.format_exc())
-	try:
-		bookmakers['netbet'] = netbet.get_games(competition)
-		log.log("netbet: " + str(bookmakers['netbet']))
-	except:
-		log.log("Cannot crawl netbet: " + traceback.format_exc())
-	try:
-		bookmakers['ps3838'] = ps3838.get_games(competition)
-		log.log("ps3838: " + str(bookmakers['ps3838']))
-	except:
-		log.log("Cannot crawl ps3838: " + traceback.format_exc())
-	log.log("-- Competition: {} --".format(competition))
-	for game in bookmakers['winamax']:
-		games = {}
-		for bookmaker in bookmakers:
-			try:
-				g = arb.get_game(game, bookmakers[bookmaker])
-				if (g):
-					games[bookmaker] = g
-			except:
-				log.log("Error while retrieving games: {}".format(traceback.format_exc()))
-		if (competition["sport"] == "football"):
-			arb.arb_football(games)
-		if (competition["sport"] == "basketball"):
-			arb.arb_basketball(games)
-	print("Progess: {:.2f}%".format(progress / len(config.competitions) * 100))
+
+async def get_competition_games(name, exchange, competition):
+    try:
+        res = await exchange.get_games(competition)
+        log.log(name + ": " + str(res))
+        return [name, res]
+    except:
+        log.log(f"Cannot crawl {name}: " + traceback.format_exc())
+    return None
+
+
+async def check_competition(competition):
+    log.log("Checking competition: {}".format(competition))
+    print("Checking competition: {}".format(competition))
+    results = await asyncio.gather(
+        get_competition_games("kineko", kineko, competition),
+        get_competition_games("sportsbetio", sportsbetio, competition),
+        get_competition_games("trustdice", trustdice, competition),
+        get_competition_games("betplay", betplay, competition),
+        get_competition_games("jackbit", jackbit, competition),
+        get_competition_games("freshbet", freshbet, competition),
+        get_competition_games("stake", stake, competition),
+    )
+    bookmakers = {}
+    for result in results:
+        if result is None:
+            continue
+        name = result[0]
+        res = result[1]
+        bookmakers[name] = res
+    log.log("-- Competition: {} --".format(competition))
+    most_games_bookmarker = None
+    for bookmaker in bookmakers.keys():
+        if most_games_bookmarker is None or len(bookmakers[bookmaker]) > len(
+            bookmakers[most_games_bookmarker]
+        ):
+            most_games_bookmarker = bookmaker
+    if most_games_bookmarker is None:
+        log.log(f"No games found for this competition: {competition}, skipping!")
+        return
+    for game in bookmakers[most_games_bookmarker]:
+        games = {}
+        for bookmaker in bookmakers:
+            try:
+                g = arb.get_game(game, bookmakers[bookmaker])
+                if g:
+                    games[bookmaker] = g
+            except:
+                log.log(
+                    "Error while retrieving games: {}".format(traceback.format_exc())
+                )
+        if competition["sport"] == "football":
+            arb.arb_football(games)
+        if competition["sport"] == "basketball":
+            arb.arb_basketball(games)
+
+
+async def start():
+    # progress = 0
+    tasks = []
+    for competition in config.competitions:
+        tasks.append(check_competition(competition))
+    await asyncio.gather(*tasks)
+
+
+async def main():
+    while True:
+        try:
+            before = time.time()
+            print("Will start a new check")
+            await start()
+            after = time.time()
+            print("Check finished in {:.2f} seconds".format(after - before))
+        except:
+            log.log("Final Error: {}".format(traceback.format_exc()))
+        time.sleep(10)
+
+
+asyncio.run(main())
