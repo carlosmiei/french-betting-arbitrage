@@ -62,26 +62,30 @@ async def get_games(competition):
         names[team["ID"]] = team["Name"]
     games = []
     for el in game_elements:
-        # names = el.select(".betBox_contestantName")
-        # team1 = "".join(names[0].text.split())
-        # team2 = "".join(names[1].text.split())
-        # odd_els = el.select(".oddValue")
-        team1 = names[el["t1"]]
-        team2 = names[el["t2"]]
-        ev = el["ev"]
-        main_odds = ev["448"]
-        values = list(main_odds.values())
-        odds = list(values)
-        first = None
-        second = None
-        third = None
-        for odd in odds:
-            if odd["pos"] == 1:
-                first = odd["coef"]
-            elif odd["pos"] == 2:
-                second = odd["coef"]
-            elif odd["pos"] == 3:
-                third = odd["coef"]
-        odds = [float(first), float(second), float(third)]
-        games.append({"team1": team1, "team2": team2, "odds": odds})
+        try:
+            # names = el.select(".betBox_contestantName")
+            # team1 = "".join(names[0].text.split())
+            # team2 = "".join(names[1].text.split())
+            # odd_els = el.select(".oddValue")
+            team1 = names[el["t1"]]
+            team2 = names[el["t2"]]
+            ev = el["ev"]
+            main_odds = ev["448"]
+            values = list(main_odds.values())
+            odds = list(values)
+            first = None
+            second = None
+            third = None
+            for odd in odds:
+                if odd["pos"] == 1:
+                    first = odd["coef"]
+                elif odd["pos"] == 2:
+                    second = odd["coef"]
+                elif odd["pos"] == 3:
+                    third = odd["coef"]
+            if first and second and third and team1 and team2:
+                odds = [float(first), float(second), float(third)]
+                games.append({"team1": team1, "team2": team2, "odds": odds})
+        except:
+            continue
     return games

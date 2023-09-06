@@ -4,3 +4,4 @@ result.tmp
 *.log
 .DS_Store
 chromedriver
+.french/

@@ -57,33 +57,38 @@ async def get_games(competition):
     response = await get_page(competition)
     games = []
     for el in response:
-        meta = el["ActiveMarkets"]
-        match_id = None
-        for m in meta:
-            if m["Name"].strip() == "Match Winner":
-                match_id = m["ID"]
-                break
-        active_odds = el["ActiveOdds"]
-        first = None
-        second = None
-        third = None
-        team1 = None
-        team2 = None
-        odds = []
-        for odd in active_odds:
-            if odd["MarketID"] == match_id:
-                if odd["Name"] == "1":
-                    team1 = odd["Title"]
-                    first = odd["Value"]
-                elif odd["Name"] == "x":
-                    second = odd["Value"]
-                elif odd["Name"] == "2":
-                    team2 = odd["Title"]
-                    third = odd["Value"]
-            if first and second and third:
-                odds = [float(first), float(second), float(third)]
-                break
-        # if len(odds) == 0:
-        #     print("Something is off")
-        games.append({"team1": team1, "team2": team2, "odds": odds})
+        try:
+            meta = el["ActiveMarkets"]
+            match_id = None
+            for m in meta:
+                if m["Name"].strip() == "Match Winner":
+                    match_id = m["ID"]
+                    break
+            active_odds = el["ActiveOdds"]
+            first = None
+            second = None
+            third = None
+            team1 = None
+            team2 = None
+            odds = []
+            for odd in active_odds:
+                if odd["MarketID"] == match_id:
+                    if odd["Name"] == "1":
+                        team1 = odd["Title"]
+                        first = odd["Value"]
+                    elif odd["Name"] == "x":
+                        second = odd["Value"]
+                    elif odd["Name"] == "2":
+                        team2 = odd["Title"]
+                        third = odd["Value"]
+                if first and second and third:
+                    odds = [float(first), float(second), float(third)]
+                    break
+            # if len(odds) == 0:
+            #     print("Something is off")
+            if first and second and third and team1 and team2:
+                games.append({"team1": team1, "team2": team2, "odds": odds})
+        except:
+            continue
+
     return games

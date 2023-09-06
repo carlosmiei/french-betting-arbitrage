@@ -22,6 +22,21 @@ import asyncio
 log.init()
 
 
+def is_valid_game(game):
+    try:
+        cond = (
+            game is not None
+            and game["odds"][0] > 1
+            and game["odds"][1] > 1
+            and game["odds"][2] > 1
+            and game["team1"] is not None
+            and game["team2"] is not None
+        )
+        return cond
+    except:
+        return False
+
+
 async def get_competition_games(name, exchange, competition):
     try:
         res = await exchange.get_games(competition)
@@ -66,8 +81,10 @@ async def check_competition(competition):
         for bookmaker in bookmakers:
             try:
                 g = arb.get_game(game, bookmakers[bookmaker])
-                if g:
+                if is_valid_game(g):
                     games[bookmaker] = g
+                else:
+                    log.log(f"[{bookmaker}][{competition}] Invalid game, skipping: {g}")
             except:
                 log.log(
                     "Error while retrieving games: {}".format(traceback.format_exc())
