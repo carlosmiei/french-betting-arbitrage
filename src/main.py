@@ -11,6 +11,8 @@ import bookmakers.betplay as betplay
 import bookmakers.trustdice as trustdice
 import bookmakers.sportsbetio as sportsbetio
 import bookmakers.kineko as kineko
+import bookmakers.chipstars as chipstars
+import bookmakers.vave3 as vave3
 import arb
 import sys
 import log
@@ -58,6 +60,10 @@ async def check_competition(competition):
         # get_competition_games("jackbit", jackbit, competition), exactly the same as freshbet
         get_competition_games("freshbet", freshbet, competition),
         get_competition_games("stake", stake, competition),
+        get_competition_games("vave3", vave3, competition),
+        # get_competition_games("netbet", netbet, competition),
+        # get_competition_games("zebet", zebet, competition),
+        # get_competition_games("chipstars", chipstars, competition), #requires selenium
     )
     bookmakers = {}
     for result in results:
@@ -73,7 +79,7 @@ async def check_competition(competition):
             bookmakers[most_games_bookmarker]
         ):
             most_games_bookmarker = bookmaker
-    if most_games_bookmarker is None:
+    if most_games_bookmarker is None or (bookmakers[most_games_bookmarker]) is None:
         log.log(f"No games found for this competition: {competition}, skipping!")
         return
     for game in bookmakers[most_games_bookmarker]:
