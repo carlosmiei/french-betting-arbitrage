@@ -20,6 +20,7 @@ competition_urls = {
         "serie-a-brasil": "https://api.kineko.com/events?time=all&leagues%5B%5D=196545288139337728",
         "bundesliga-austria": "https://api.kineko.com/events?time=all&leagues%5B%5D=209214137756176384",
         "division-1a": "https://api.kineko.com/events?time=all&leagues%5B%5D=208680229196156928",
+        "mls": "https://api.kineko.com/events?time=all&leagues%5B%5D=193475268207341568",
     },
     "basketball": {
         "nba": "https://api.trustdice.win/sports/tournament/?lang=en&sport=basketball&tag=upcoming&category=usa&tournament=nba&count=100",

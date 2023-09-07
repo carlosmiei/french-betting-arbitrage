@@ -20,6 +20,7 @@ competition_urls = {
         "serie-a-brasil": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=96463%2C1268397&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "bundesliga-austria": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=26031%2C28787&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "division-1a": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=28787&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "mls": "https://1xbit1.com/LineFeed/Get1x2_VZip?count=100&lng=en&mode=4&top=true&partner=65",
     },
     "basketball": {
         # "nba": "",

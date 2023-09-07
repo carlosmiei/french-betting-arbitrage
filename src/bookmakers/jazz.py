@@ -53,6 +53,7 @@ competition_urls = {
         "premier-league": 59,
         "serie-a": 60,
         "primeira": 179,
+        "mls": 115,
         # "serie-a-brasil": "",
         # "bundesliga-austria": "",
         # "division-1a": "",

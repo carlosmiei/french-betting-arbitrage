@@ -6,6 +6,7 @@ import aiohttp
 # https://sportsbook.betplay.io/api/bettingfeed/preview/markets/bytournament?LangCode=en-US&TournamentId=39508
 
 
+# https://sportsbook.betplay.io/api/bettingfeed/alternative/markets?LangCode=en-US&MatchIds=2994643
 ## get info about competitions
 # https://sportsbook.betplay.io/api/bettingfeed/prematch/events?LangCode=en-US
 def get_url(id):
@@ -23,6 +24,7 @@ competition_urls = {
         "bundesliga-austria": get_url(39382),
         "division-1a": get_url(41259),
         "bundesliga": get_url(39508),
+        "mls": get_url(2994643),
     },
     "basketball": {
         "nba": get_url(3619),
