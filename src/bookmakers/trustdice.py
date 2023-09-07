@@ -56,19 +56,23 @@ async def get_page(competition):
 
 async def get_games(competition):
     response = await get_page(competition)
+    if response is None:
+        return None
     result = response["results"]
     keys = list(result.keys())
     game_elements = result[keys[0]]
     games = []
     for el in game_elements:
         markets = el["markets"]
+        first = None
+        second = None
+        third = None
+        team1 = None
+        team2 = None
         for market in markets:
+            if market is None:
+                continue
             if market["name"] == "1x2":
-                first = None
-                second = None
-                third = None
-                team1 = None
-                team2 = None
                 outcomes = market["outcomes"]
                 for outcome in outcomes:
                     if outcome["outcome_id"] == "1":

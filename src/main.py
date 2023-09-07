@@ -47,6 +47,8 @@ def is_valid_game(game):
 async def get_competition_games(name, exchange, competition):
     try:
         res = await exchange.get_games(competition)
+        if res is None:
+            return None
         log.log(name + ": " + str(res))
         return [name, res]
     except:
@@ -73,9 +75,9 @@ async def check_competition(competition):
         get_competition_games("betsio", betsio, competition),
         get_competition_games("jazz", jazz, competition),
         get_competition_games("xbit1", xbit1, competition),
-        # get_competition_games("netbet", netbet, competition),
-        # get_competition_games("zebet", zebet, competition),
-        # get_competition_games("chipstars", chipstars, competition), #requires selenium
+        # # get_competition_games("netbet", netbet, competition),
+        # # get_competition_games("zebet", zebet, competition),
+        # # # get_competition_games("chipstars", chipstars, competition),  # requires seleniumk
     )
     bookmakers = {}
     for result in results:
@@ -101,8 +103,8 @@ async def check_competition(competition):
                 g = arb.get_game(game, bookmakers[bookmaker])
                 if is_valid_game(g):
                     games[bookmaker] = g
-                else:
-                    log.log(f"[{bookmaker}][{competition}] Invalid game, skipping: {g}")
+                # else:
+                #     log.log(f"[{bookmaker}][{competition}] Invalid game, skipping: {g}")
             except:
                 log.log(
                     "Error while retrieving games: {}".format(traceback.format_exc())

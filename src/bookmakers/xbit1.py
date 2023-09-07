@@ -20,7 +20,12 @@ competition_urls = {
         "serie-a-brasil": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=96463%2C1268397&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "bundesliga-austria": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=26031%2C28787&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "division-1a": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=28787&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
-        "mls": "https://1xbit1.com/LineFeed/Get1x2_VZip?count=100&lng=en&mode=4&top=true&partner=65",
+        "mls": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=828065&count=50&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "russia": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=225733%2C828065&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "eredivise": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=2018750&count=50&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "super-lig": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=11113&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "copa-argentina": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=119577&count=50&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "croatia": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=2439506&count=50&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
     },
     "basketball": {
         # "nba": "",
@@ -53,6 +58,8 @@ async def get_page(competition):
 
 async def get_games(competition):
     response = await get_page(competition)
+    if response is None:
+        return None
     result = response["Value"]
     games = []
     for el in result:

@@ -102,6 +102,8 @@ def american_to_decimal(american_odds):
 
 async def get_games(competition):
     response = await get_page(competition)
+    if response is None:
+        return None
     result = response[0]["Games"]
     games = []
     for el in result:

@@ -57,6 +57,8 @@ async def get_page(competition):
 
 async def get_games(competition):
     response = await get_page(competition)
+    if response is None:
+        return None
     games = []
     for el in response:
         try:

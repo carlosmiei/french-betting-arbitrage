@@ -55,6 +55,8 @@ async def get_page(competition):
 
 async def get_games(competition):
     response = await get_page(competition)
+    if response is None:
+        return None
     game_elements = json.loads(response["game"])
     teams = json.loads(response["teams"])
     names = {}

@@ -21,6 +21,11 @@ competition_urls = {
         "bundesliga-austria": "https://api.kineko.com/events?time=all&leagues%5B%5D=209214137756176384",
         "division-1a": "https://api.kineko.com/events?time=all&leagues%5B%5D=208680229196156928",
         "mls": "https://api.kineko.com/events?time=all&leagues%5B%5D=193475268207341568",
+        "copa-argentina": "https://api.kineko.com/events?time=all&leagues%5B%5D=193998709095297024",
+        "croatia": "https://api.kineko.com/events?time=all&leagues%5B%5D=209233409853247488",
+        "eredivise": "https://api.kineko.com/events?time=all&leagues%5B%5D=208790444601135104",
+        "super-lig": "https://api.kineko.com/events?time=all&leagues%5B%5D=209993008641363968",
+        "russia": "https://api.kineko.com/events?time=all&leagues%5B%5D=208858552861872128",
     },
     "basketball": {
         "nba": "https://api.trustdice.win/sports/tournament/?lang=en&sport=basketball&tag=upcoming&category=usa&tournament=nba&count=100",
@@ -53,6 +58,8 @@ async def get_page(competition):
 
 async def get_games(competition):
     response = await get_page(competition)
+    if response is None:
+        return None
     result = response["data"][0]["data"][0]["data"]
     games = []
     for el in result:

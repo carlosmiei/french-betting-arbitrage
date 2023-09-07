@@ -29,6 +29,7 @@ def log(message, end="\n"):
 def discord(message):
     global last_discord_message
     print(message)
+    return
     try:
         while time.time() - last_discord_message < discord_waiting_time:
             time.sleep(discord_waiting_time)
