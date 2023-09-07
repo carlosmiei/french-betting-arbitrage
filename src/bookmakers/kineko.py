@@ -28,7 +28,7 @@ competition_urls = {
         "russia": "https://api.kineko.com/events?time=all&leagues%5B%5D=208858552861872128",
     },
     "basketball": {
-        "nba": "https://api.trustdice.win/sports/tournament/?lang=en&sport=basketball&tag=upcoming&category=usa&tournament=nba&count=100",
+        # "nba": "https://api.trustdice.win/sports/tournament/?lang=en&sport=basketball&tag=upcoming&category=usa&tournament=nba&count=100",
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
     },
     "tennis": {

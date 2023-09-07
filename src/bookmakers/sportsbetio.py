@@ -53,6 +53,8 @@ async def get_page(competition):
 
 async def get_games(competition):
     json = await get_page(competition)
+    if json is None:
+        return None
     games = []
     game_elements = json["Result"]["Items"][0]["Events"]
     for el in game_elements:

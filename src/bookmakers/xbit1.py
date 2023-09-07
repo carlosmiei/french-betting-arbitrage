@@ -26,6 +26,9 @@ competition_urls = {
         "super-lig": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=11113&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "copa-argentina": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=119577&count=50&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "croatia": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=2439506&count=50&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "canada-premier": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=1924563&count=50&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "poland": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=30693&count=50&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "arabia": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=16819&count=50&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
     },
     "basketball": {
         # "nba": "",

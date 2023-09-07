@@ -23,6 +23,11 @@ competition_urls = {
         "serie-a-brasil": "https://sportservice.inplaynet.tech/api/prematch/getprematchgameall/en/52/?games=,26514951,26514955,26514953,26514954,26537945,26514952,26560143,26560144,26581872,26581870,26626307,26647375,26647379,26669394,26669389,26669393,26692298,26692299,26713882,26736497,",
         "bundesliga-austria": "https://sportservice.inplaynet.tech/api/prematch/getprematchgameall/en/52/?games=,26093319,26115561,26115562,26115563,26115564,26367673,26115565,26594015,26137114,26743529,26271678,26271679,26293630,26293637,26744236,26009653,25881396,26293631,",
         "division-1a": "https://sportservice.inplaynet.tech/api/prematch/getprematchgameall/en/52/?games=,26753453,26753458,26753461,26753504,26753605,26753715,26753817,26753844,",
+        "mls": "https://sportservice.inplaynet.tech/api/prematch/getprematchgameall/de/52/?games=,25038268,25038271,25318690,25038269,25060107,25185990,25191371,25191369,25191370,25191372,25191373,25191374,25191375,25191377,25191378,25191380,25191379,25191381,25213113,",
+        "russia": "https://sportservice.inplaynet.tech/api/prematch/getprematchgameall/de/52/?games=,26429482,26429484,26429486,26795875,26429481,26429495,26429483,26429480,26429489,26429493,26429494,26429490,26429491,26429492,26754272,26429496,",
+        "arabia": "https://sportservice.inplaynet.tech/api/prematch/getprematchgameall/de/52/?games=,26841176,26841075,26841174,26841101,26841216,26841102,26841175,26841221,26841222,",
+        "canada-premier": "https://sportservice.inplaynet.tech/api/prematch/getprematchgameall/de/52/?games=,26792516,26813779,26812483,26813733,",
+        "poland": "https://sportservice.inplaynet.tech/api/prematch/getprematchgameall/de/52/?games=,26496940,26496944,26496942,26496945,26496904,26496946,26629339,26629340,26679726,",
     },
     "basketball": {
         "nba": get_url(2980),
@@ -50,14 +55,21 @@ async def get_page(competition):
             },
         ) as response:
             response = await response.json()
-        return json.loads(response)
+        try:
+            return json.loads(response)
+        except:
+            return response
 
 
 async def get_games(competition):
     response = await get_page(competition)
     if response is None:
         return None
-    game_elements = json.loads(response["game"])
+
+    try:
+        game_elements = json.loads(response["game"])
+    except:
+        game_elements = response["game"]
     teams = json.loads(response["teams"])
     names = {}
     for team in teams:

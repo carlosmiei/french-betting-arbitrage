@@ -6,6 +6,8 @@ mismatch_pairs = [
     ["MelbourneCityFC", "MelbourneVictoryFC"],
 ]
 
+cache = []
+
 
 def str_similarity(a, b):
     return SequenceMatcher(None, a, b).ratio()
@@ -92,36 +94,40 @@ def arb_football(games):
             games[b3]["odds"][2],
         )
         if profit > 0:
-            log.log("FOUND!!!!")
             stakes = get_stakes3(
                 games[b1]["odds"][0], games[b2]["odds"][1], games[b3]["odds"][2], 10
             )
-            log.discord(
-                "Abritrage found for **{}**-**{}** with **{}/{}/{}** with odds {}/{}/{}: {:.2f}%".format(
-                    games[b1]["team1"],
-                    games[b1]["team2"],
-                    b1,
-                    b2,
-                    b3,
-                    games[b1]["odds"][0],
-                    games[b2]["odds"][1],
-                    games[b3]["odds"][2],
-                    profit,
-                )
+
+            log.log("FOUND!!!!")
+            message = "Abritrage found for **{}**-**{}** with **{}/{}/{}** with odds {}/{}/{}: {:.2f}%".format(
+                games[b1]["team1"],
+                games[b1]["team2"],
+                b1,
+                b2,
+                b3,
+                games[b1]["odds"][0],
+                games[b2]["odds"][1],
+                games[b3]["odds"][2],
+                profit,
             )
-            log.discord(
-                "> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for N, **{}**@{} on {} for B".format(
-                    stakes["rounded"][0],
-                    games[b1]["odds"][0],
-                    b1,
-                    stakes["rounded"][1],
-                    games[b2]["odds"][1],
-                    b2,
-                    stakes["rounded"][2],
-                    games[b3]["odds"][2],
-                    b3,
+            if message not in cache:
+                cache.append(message)
+                log.discord(message)
+                log.discord(
+                    "> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for N, **{}**@{} on {} for B".format(
+                        stakes["rounded"][0],
+                        games[b1]["odds"][0],
+                        b1,
+                        stakes["rounded"][1],
+                        games[b2]["odds"][1],
+                        b2,
+                        stakes["rounded"][2],
+                        games[b3]["odds"][2],
+                        b3,
+                    )
                 )
-            )
+            else:
+                log.log(f"Duplicated opportunity, cache length: {len(cache)}")
         log.log(
             "{}: ({:10}/{:10}/{:10}) {:.2f}%".format(
                 " ".join(combination.split()), b1, b2, b3, profit
