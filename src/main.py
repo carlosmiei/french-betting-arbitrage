@@ -13,6 +13,7 @@ import bookmakers.sportsbetio as sportsbetio
 import bookmakers.kineko as kineko
 import bookmakers.chipstars as chipstars
 import bookmakers.vave3 as vave3
+import bookmakers.betsio as betsio
 import arb
 import sys
 import log
@@ -54,13 +55,18 @@ async def check_competition(competition):
     print("Checking competition: {}".format(competition))
     results = await asyncio.gather(
         get_competition_games("kineko", kineko, competition),
-        # get_competition_games("sportsbetio", sportsbetio, competition),  exactly the same as stake
+        # get_competition_games(
+        #     "sportsbetio", sportsbetio, competition
+        # ),  # exactly the same as stake
         get_competition_games("trustdice", trustdice, competition),
         get_competition_games("betplay", betplay, competition),
-        # get_competition_games("jackbit", jackbit, competition), exactly the same as freshbet
+        # get_competition_games(
+        #     "jackbit", jackbit, competition
+        # ),  # exactly the same as freshbet
         get_competition_games("freshbet", freshbet, competition),
         get_competition_games("stake", stake, competition),
         get_competition_games("vave3", vave3, competition),
+        get_competition_games("betsio", betsio, competition),
         # get_competition_games("netbet", netbet, competition),
         # get_competition_games("zebet", zebet, competition),
         # get_competition_games("chipstars", chipstars, competition), #requires selenium
