@@ -16,6 +16,7 @@ import bookmakers.vave3 as vave3
 import bookmakers.betsio as betsio
 import bookmakers.jazz as jazz
 import bookmakers.xbit1 as xbit1
+import bookmakers.bet7 as bet7
 import arb
 import sys
 import log
@@ -61,22 +62,24 @@ async def check_competition(competition):
     print("Checking competition: {}".format(competition))
     results = await asyncio.gather(
         get_competition_games("kineko", kineko, competition),
-        # # # # get_competition_games(
-        # # # #     "sportsbetio", sportsbetio, competition
-        # # # # ),  # exactly the same as stake
         get_competition_games("trustdice", trustdice, competition),
         get_competition_games("betplay", betplay, competition),
-        # # # get_competition_games(
-        # # #     "jackbit", jackbit, competition
-        # # # ),  # exactly the same as freshbet
         get_competition_games("freshbet", freshbet, competition),
         get_competition_games("stake", stake, competition),
         get_competition_games("vave3", vave3, competition),
         get_competition_games("betsio", betsio, competition),
         get_competition_games("jazz", jazz, competition),
         get_competition_games("xbit1", xbit1, competition),
-        # # get_competition_games("chipstars", chipstars, competition),  # requires seleniumk
+        get_competition_games("bet7", bet7, competition),
     )
+    # # # get_competition_games(
+    # # #     "jackbit", jackbit, competition
+    # # # ),  # exactly the same as freshbet
+    # # # # get_competition_games(
+    # # # #     "sportsbetio", sportsbetio, competition
+    # # # # ),  # exactly the same as stake
+    # # get_competition_games("chipstars", chipstars, competition),  # requires seleniumk
+
     bookmakers = {}
     for result in results:
         if result is None:
