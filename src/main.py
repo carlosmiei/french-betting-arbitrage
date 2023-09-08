@@ -17,6 +17,7 @@ import bookmakers.betsio as betsio
 import bookmakers.jazz as jazz
 import bookmakers.xbit1 as xbit1
 import bookmakers.bet7 as bet7
+import bookmakers.bitsler as bitsler
 import arb
 import sys
 import log
@@ -71,6 +72,7 @@ async def check_competition(competition):
         get_competition_games("jazz", jazz, competition),
         get_competition_games("xbit1", xbit1, competition),
         get_competition_games("bet7", bet7, competition),
+        get_competition_games("bitsler", bitsler, competition),
     )
     # # # get_competition_games(
     # # #     "jackbit", jackbit, competition
