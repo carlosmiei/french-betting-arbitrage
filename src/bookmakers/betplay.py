@@ -27,7 +27,7 @@ competition_urls = {
         "mls": get_url(2994643),
     },
     "basketball": {
-        "nba": get_url(3619),
+        # "nba": get_url(3619),
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
     },
     "tennis": {

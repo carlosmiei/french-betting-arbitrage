@@ -61,7 +61,7 @@ async def get_competition_games(name, exchange, competition):
 
 async def check_competition(competition):
     log.log("Checking competition: {}".format(competition))
-    print("Checking competition: {}".format(competition))
+    # print("Checking competition: {}".format(competition))
     results = await asyncio.gather(
         get_competition_games("kineko", kineko, competition),
         get_competition_games("trustdice", trustdice, competition),

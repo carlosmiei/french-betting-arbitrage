@@ -112,6 +112,8 @@ async def get_games(competition):
         team2 = el["away"]["name"]
         markets = el["defaultMarkets"]
         for market in markets:
+            if market is None:
+                continue
             if market["name"] == "1x2":
                 outcomes = market["outcomes"]
                 for outcome in outcomes:

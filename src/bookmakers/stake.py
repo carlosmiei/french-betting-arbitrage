@@ -23,7 +23,7 @@ competition_urls = {
         "division-1a": get_url(2965),
     },
     "basketball": {
-        "nba": get_url(2980),
+        # "nba": get_url(2980),
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
     },
     "tennis": {

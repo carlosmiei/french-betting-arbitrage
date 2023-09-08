@@ -26,7 +26,7 @@ competition_urls = {
         "division-1a": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=belgium&tournament=pro-league&count=100",
     },
     "basketball": {
-        "nba": "https://api.trustdice.win/sports/tournament/?lang=en&sport=basketball&tag=upcoming&category=usa&tournament=nba&count=100",
+        # "nba": "https://api.trustdice.win/sports/tournament/?lang=en&sport=basketball&tag=upcoming&category=usa&tournament=nba&count=100",
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
     },
     "tennis": {

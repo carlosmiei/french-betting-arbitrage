@@ -1,5 +1,8 @@
 from difflib import SequenceMatcher
 import log
+from itertools import permutations
+from itertools import product
+
 
 mismatch_pairs = [
     ["MelbourneCity", "MelbourneVictory"],
@@ -83,11 +86,12 @@ def arb_football(games):
         except:
             log.log(f"Error while logging game: {game}")
     log.log("{} combinations possible --".format(combinations))
-    for i in range(combinations):
+    comb = list(product(list(games.keys()), repeat=3))
+    for i, (b1, b2, b3) in enumerate(comb):
         combination = str(dec_to_base(i, nb_bookmakers)).zfill(3)
-        b1 = list(games.keys())[int(combination[0])]
-        b2 = list(games.keys())[int(combination[1])]
-        b3 = list(games.keys())[int(combination[2])]
+        # b1 = list(games.keys())[int(combination[0])]
+        # b2 = list(games.keys())[int(combination[1])]
+        # b3 = list(games.keys())[int(combination[2])]
         profit = arb3(
             games[b1]["odds"][0],
             games[b2]["odds"][1],

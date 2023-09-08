@@ -28,7 +28,7 @@ competition_urls = {
         "poland": "https://sport.bets.io/api/v2/matches?limit=50&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-07T20%3A54%3A08.987Z&tournament_id=453&type=match",
     },
     "basketball": {
-        "nba": "https://sport.bets.io/api/v2/matches?bettable=true&limit=100&match_status=0&sort_by=tournament.priority%3Aasc&sort_by=tournament.id%3Aasc&sort_by=start_time%3Aasc&sort_by=bets_count%3Adesc&tournament_id=12&type=match",
+        # "nba": "https://sport.bets.io/api/v2/matches?bettable=true&limit=100&match_status=0&sort_by=tournament.priority%3Aasc&sort_by=tournament.id%3Aasc&sort_by=start_time%3Aasc&sort_by=bets_count%3Adesc&tournament_id=12&type=match",
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
     },
     "tennis": {
