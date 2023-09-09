@@ -103,7 +103,7 @@ def arb_football(games):
             )
 
             log.log("FOUND!!!!")
-            message = "Abritrage found for **{}**-**{}** with **{}/{}/{}** with odds {}/{}/{}: {:.2f}%".format(
+            message = "Abritrage found for [{}-{}] with [{}/{}/{}] with odds [{}/{}/{}]: {:.2f}%".format(
                 games[b1]["team1"],
                 games[b1]["team2"],
                 b1,

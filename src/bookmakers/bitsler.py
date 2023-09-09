@@ -53,6 +53,7 @@ competition_urls = {
         "serie-a-brasil": 325,
         "arabia": 19238,
         "copa-argentina": 1024,
+        "champions": 7
         # "bundesliga-austria": "",
         # "division-1a": "",
     },
