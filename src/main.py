@@ -26,6 +26,7 @@ import config
 import traceback
 import time
 import asyncio
+import sys
 
 log.init()
 
@@ -129,6 +130,10 @@ async def start():
 
 
 async def main():
+    sleep = 60
+    if len(sys.argv) > 1:
+        sleep = int(sys.argv[1])
+    print("Will sleep {} seconds between each check".format(sleep))
     while True:
         try:
             before = time.time()
@@ -138,7 +143,7 @@ async def main():
             print("Check finished in {:.2f} seconds".format(after - before))
         except:
             log.log("Final Error: {}".format(traceback.format_exc()))
-        time.sleep(5)
+        time.sleep(sleep)
 
 
 asyncio.run(main())

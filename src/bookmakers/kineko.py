@@ -26,6 +26,7 @@ competition_urls = {
         "eredivise": "https://api.kineko.com/events?time=all&leagues%5B%5D=208790444601135104",
         "super-lig": "https://api.kineko.com/events?time=all&leagues%5B%5D=209993008641363968",
         "russia": "https://api.kineko.com/events?time=all&leagues%5B%5D=208858552861872128",
+        "champions": "https://api.kineko.com/events?time=all&leagues%5B%5D=206677483662241792",
     },
     "basketball": {
         # "nba": "https://api.trustdice.win/sports/tournament/?lang=en&sport=basketball&tag=upcoming&category=usa&tournament=nba&count=100",
