@@ -52,6 +52,7 @@ def set_session(proxy=None):
 
 async def close_session():
     global session
+    global german_session
     if session is not None:
         await session.close()
         session = None
