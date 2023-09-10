@@ -39,7 +39,7 @@ async def get_page(competition):
         url = competition_urls[competition["sport"]][competition["competition"]]
     else:
         return None
-    # async with session.get(
+    # async with get_session().get(
     #     url,
     #     headers={
     #         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"

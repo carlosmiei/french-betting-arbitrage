@@ -1,8 +1,4 @@
-from bs4 import BeautifulSoup
-
-# import requests
-import json
-import aiohttp
+from session_manager import get_session
 
 
 cookies = {
@@ -73,23 +69,22 @@ competition_urls = {
 
 async def get_page(competition):
     url = "https://thunderpick.io/api/matches"
-    async with aiohttp.ClientSession() as session:
-        if (
-            competition["sport"] in competition_urls
-            and competition["competition"] in competition_urls[competition["sport"]]
-        ):
-            id = competition_urls[competition["sport"]][competition["competition"]]
-            body = get_data(id[0], id[1])
-        else:
-            return None
-        async with session.post(
-            url,
-            json=body,
-            headers=headers,
-            cookies=cookies,
-        ) as response:
-            response = await response.json()
-        return response
+    if (
+        competition["sport"] in competition_urls
+        and competition["competition"] in competition_urls[competition["sport"]]
+    ):
+        id = competition_urls[competition["sport"]][competition["competition"]]
+        body = get_data(id[0], id[1])
+    else:
+        return None
+    async with get_session().post(
+        url,
+        json=body,
+        headers=headers,
+        cookies=cookies,
+    ) as response:
+        response = await response.json()
+    return response
 
 
 async def get_games(competition):

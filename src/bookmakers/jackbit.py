@@ -1,7 +1,5 @@
-from bs4 import BeautifulSoup
-import requests
+from session_manager import get_session
 import json
-import aiohttp
 
 # first
 # https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=stake&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=stake&sportids=66&categoryids=0&champids=2936&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-05T16%3A20%3A00.000Z&endDate=2023-09-12T16%3A20%3A00.000Z
@@ -29,22 +27,21 @@ competition_urls = {
 
 
 async def get_page(competition):
-    async with aiohttp.ClientSession() as session:
-        if (
-            competition["sport"] in competition_urls
-            and competition["competition"] in competition_urls[competition["sport"]]
-        ):
-            url = competition_urls[competition["sport"]][competition["competition"]]
-        else:
-            return None
-        async with session.get(
-            url,
-            headers={
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
-            },
-        ) as response:
-            response = await response.json()
-        return json.loads(response)
+    if (
+        competition["sport"] in competition_urls
+        and competition["competition"] in competition_urls[competition["sport"]]
+    ):
+        url = competition_urls[competition["sport"]][competition["competition"]]
+    else:
+        return None
+    async with get_session().get(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
+        },
+    ) as response:
+        response = await response.json()
+    return json.loads(response)
 
 
 async def get_games(competition):

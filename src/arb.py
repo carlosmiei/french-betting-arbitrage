@@ -115,28 +115,29 @@ def arb_football(games):
                 profit,
             )
             if message not in cache:
+                stake_message = "> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for N, **{}**@{} on {} for B".format(
+                    stakes["rounded"][0],
+                    games[b1]["odds"][0],
+                    b1,
+                    stakes["rounded"][1],
+                    games[b2]["odds"][1],
+                    b2,
+                    stakes["rounded"][2],
+                    games[b3]["odds"][2],
+                    b3,
+                )
                 cache.append(message)
                 log.discord(message)
-                log.discord(
-                    "> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for N, **{}**@{} on {} for B".format(
-                        stakes["rounded"][0],
-                        games[b1]["odds"][0],
-                        b1,
-                        stakes["rounded"][1],
-                        games[b2]["odds"][1],
-                        b2,
-                        stakes["rounded"][2],
-                        games[b3]["odds"][2],
-                        b3,
-                    )
-                )
+                log.discord(stake_message)
+                log.log(message)
+                log.log(stake_message)
             else:
                 log.log(f"Duplicated opportunity, cache length: {len(cache)}")
-        log.log(
-            "{}: ({:10}/{:10}/{:10}) {:.2f}%".format(
-                " ".join(combination.split()), b1, b2, b3, profit
+            log.log(
+                "{}: ({:10}/{:10}/{:10}) {:.2f}%".format(
+                    " ".join(combination.split()), b1, b2, b3, profit
+                )
             )
-        )
 
 
 def arb_basketball(games):
@@ -186,11 +187,12 @@ def arb_basketball(games):
                     b2,
                 )
             )
-        log.log(
-            "{}: ({:10}/{:10}) {:.2f}%".format(
-                " ".join(combination.split()), b1, b2, profit
+
+            log.log(
+                "{}: ({:10}/{:10}) {:.2f}%".format(
+                    " ".join(combination.split()), b1, b2, profit
+                )
             )
-        )
 
 
 def get_stakes3(a, n, b, investment):

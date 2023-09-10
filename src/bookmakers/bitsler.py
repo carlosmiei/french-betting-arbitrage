@@ -1,9 +1,4 @@
-from bs4 import BeautifulSoup
-
-# import requests
-import json
-import aiohttp
-
+from session_manager import get_session
 
 headers = {
     "authority": "sports.bitsler.com",
@@ -69,24 +64,23 @@ competition_urls = {
 
 async def get_page(competition):
     url = "https://sports.bitsler.com/api/getMatchesByTournament"
-    async with aiohttp.ClientSession() as session:
-        if (
-            competition["sport"] in competition_urls
-            and competition["competition"] in competition_urls[competition["sport"]]
-        ):
-            id = competition_urls[competition["sport"]][competition["competition"]]
-            body = get_data(id)
-        else:
-            return None
-        async with session.post(
-            url,
-            data=body,
-            headers={
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
-            },
-        ) as response:
-            response = await response.json()
-        return response
+    if (
+        competition["sport"] in competition_urls
+        and competition["competition"] in competition_urls[competition["sport"]]
+    ):
+        id = competition_urls[competition["sport"]][competition["competition"]]
+        body = get_data(id)
+    else:
+        return None
+    async with get_session().post(
+        url,
+        data=body,
+        headers={
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
+        },
+    ) as response:
+        response = await response.json()
+    return response
 
 
 def american_to_decimal(american_odds):

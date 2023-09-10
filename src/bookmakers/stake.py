@@ -1,7 +1,4 @@
-from bs4 import BeautifulSoup
-import requests
-import json
-import aiohttp
+from session_manager import get_session
 
 
 def get_url(id):
@@ -33,22 +30,21 @@ competition_urls = {
 
 
 async def get_page(competition):
-    async with aiohttp.ClientSession() as session:
-        if (
-            competition["sport"] in competition_urls
-            and competition["competition"] in competition_urls[competition["sport"]]
-        ):
-            url = competition_urls[competition["sport"]][competition["competition"]]
-        else:
-            return None
-        async with session.get(
-            url,
-            headers={
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
-            },
-        ) as response:
-            response = await response.json()
-        return response
+    if (
+        competition["sport"] in competition_urls
+        and competition["competition"] in competition_urls[competition["sport"]]
+    ):
+        url = competition_urls[competition["sport"]][competition["competition"]]
+    else:
+        return None
+    async with get_session().get(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
+        },
+    ) as response:
+        response = await response.json()
+    return response
 
 
 async def get_games(competition):

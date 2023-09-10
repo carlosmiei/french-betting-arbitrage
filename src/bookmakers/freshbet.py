@@ -1,7 +1,5 @@
-from bs4 import BeautifulSoup
-import requests
+from session_manager import get_session
 import json
-import aiohttp
 
 # https://sportservice.inplaynet.tech/api/prematch/getprematchgameall/en/52/?games=,25207895,25207890,25207893,25207897,25207889,25207891,25207898,25207894,25207892,25207896,25363539,25363542,25363545,25363551,25363552,25363556,25363557,25363558,25363559,25363560,
 
@@ -42,25 +40,24 @@ competition_urls = {
 
 
 async def get_page(competition):
-    async with aiohttp.ClientSession() as session:
-        if (
-            competition["sport"] in competition_urls
-            and competition["competition"] in competition_urls[competition["sport"]]
-        ):
-            url = competition_urls[competition["sport"]][competition["competition"]]
-        else:
-            return None
-        async with session.get(
-            url,
-            headers={
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
-            },
-        ) as response:
-            response = await response.json()
-        try:
-            return json.loads(response)
-        except:
-            return response
+    if (
+        competition["sport"] in competition_urls
+        and competition["competition"] in competition_urls[competition["sport"]]
+    ):
+        url = competition_urls[competition["sport"]][competition["competition"]]
+    else:
+        return None
+    async with get_session().get(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
+        },
+    ) as response:
+        response = await response.json()
+    try:
+        return json.loads(response)
+    except:
+        return response
 
 
 async def get_games(competition):

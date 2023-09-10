@@ -1,17 +1,19 @@
-import bookmakers.winamax as winamax
-import bookmakers.pmu as pmu
-import bookmakers.betclic as betclic
-import bookmakers.zebet as zebet
-import bookmakers.netbet as netbet
-import bookmakers.ps3838 as ps3838
+# import bookmakers.winamax as winamax
+# import bookmakers.pmu as pmu
+# import bookmakers.betclic as betclic
+# import bookmakers.zebet as zebet
+# import bookmakers.netbet as netbet
+# import bookmakers.ps3838 as ps3838
 import bookmakers.stake as stake
 import bookmakers.freshbet as freshbet
 import bookmakers.jackbit as jackbit
 import bookmakers.betplay as betplay
 import bookmakers.trustdice as trustdice
-import bookmakers.sportsbetio as sportsbetio
+
+# import bookmakers.sportsbetio as sportsbetio
 import bookmakers.kineko as kineko
-import bookmakers.chipstars as chipstars
+
+# import bookmakers.chipstars as chipstars
 import bookmakers.vave3 as vave3
 import bookmakers.betsio as betsio
 import bookmakers.jazz as jazz
@@ -27,10 +29,15 @@ import traceback
 import time
 import asyncio
 import sys
+import aiohttp
+from session_manager import set_session, close_session, proxies, set_german_session
 
 log.init()
 
 # wolf.bet can be added but the API is confusing
+
+
+session = None
 
 
 def is_valid_game(game):
@@ -62,7 +69,6 @@ async def get_competition_games(name, exchange, competition):
 
 async def check_competition(competition):
     log.log("Checking competition: {}".format(competition))
-    # print("Checking competition: {}".format(competition))
     results = await asyncio.gather(
         get_competition_games("kineko", kineko, competition),
         get_competition_games("trustdice", trustdice, competition),
@@ -122,7 +128,6 @@ async def check_competition(competition):
 
 
 async def start():
-    # progress = 0
     tasks = []
     for competition in config.competitions:
         tasks.append(check_competition(competition))
@@ -134,13 +139,22 @@ async def main():
     if len(sys.argv) > 1:
         sleep = int(sys.argv[1])
     print("Will sleep {} seconds between each check".format(sleep))
+    i = 0
+    proxies_number = len(proxies)
     while True:
         try:
             before = time.time()
             print("Will start a new check")
+            proxy_number = i % proxies_number
+            set_session(
+                proxies[proxy_number]
+            )  # use a different proxy on each iteration
+            set_german_session()  # some exchanges require a german ip
             await start()
+            await close_session()
             after = time.time()
             print("Check finished in {:.2f} seconds".format(after - before))
+            i += 1
         except:
             log.log("Final Error: {}".format(traceback.format_exc()))
         time.sleep(sleep)
