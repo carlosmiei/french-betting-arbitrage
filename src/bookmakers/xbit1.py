@@ -26,6 +26,7 @@ competition_urls = {
         "poland": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=30693&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "arabia": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=16819&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "champions": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=118587&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "euro": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=2463568&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true"
         # "uefa": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
     },
     "basketball": {

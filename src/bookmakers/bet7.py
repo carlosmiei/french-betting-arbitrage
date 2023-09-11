@@ -22,6 +22,7 @@ competition_urls = {
         "copa-argentina": "https://www.betseven13.com/iapi/sportsbook/v2/tournaments/1024",
         "mls": "https://www.betseven13.com/iapi/sportsbook/v2/tournaments/242",
         "canada-premier": "https://www.betseven13.com/iapi/sportsbook/v2/tournaments/28432",
+        "euro": "https://www.betseven13.com/iapi/sportsbook/v2/tournaments/27",
     },
     "basketball": {
         # "nba": "https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=sportsbetio&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=sportsbetio&sportids=67&categoryids=0&champids=2980&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-06T11%3A27%3A00.000Z&endDate=2023-09-13T11%3A27%3A00.000Z",

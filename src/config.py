@@ -2,6 +2,7 @@ discord_url = "https://discord.com/api/webhooks/1148973937305342013/Dh1LGNC_vyCD
 
 competitions = [
     {"sport": "football", "competition": "champions"},
+    {"sport": "football", "competition": "euro"},
     {"sport": "football", "competition": "uefa"},
     {"sport": "football", "competition": "ligue1"},
     {"sport": "football", "competition": "canada-premier"},

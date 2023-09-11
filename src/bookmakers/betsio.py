@@ -24,6 +24,7 @@ competition_urls = {
         "poland": "https://sport.bets.io/api/v2/matches?limit=100&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-07T20%3A54%3A08.987Z&tournament_id=453&type=match",
         "champions": "https://sport.bets.io/api/v2/matches?limit=100&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-09T14%3A05%3A27.852Z&tournament_id=3&type=match",
         "uefa": "https://sport.bets.io/api/v2/matches?limit=100&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-09T14%3A06%3A48.449Z&tournament_id=35&type=match",
+        "euro": "https://sport.bets.io/api/v2/matches?limit=100&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-11T14%3A12%3A07.418Z&tournament_id=4222&type=match",
     },
     "basketball": {
         # "nba": "https://sport.bets.io/api/v2/matches?bettable=true&limit=100&match_status=0&sort_by=tournament.priority%3Aasc&sort_by=tournament.id%3Aasc&sort_by=start_time%3Aasc&sort_by=bets_count%3Adesc&tournament_id=12&type=match",

@@ -56,6 +56,8 @@ competition_urls = {
         "eredivise": [664, 528],
         "poland": [2138, 616],
         "champions": [164, None],
+        "euro": [2945, None],
+        "uefa": [164, None],
     },
     "basketball": {
         # "nba": 3,

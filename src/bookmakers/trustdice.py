@@ -22,6 +22,7 @@ competition_urls = {
         "bundesliga-austria": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=austria&tournament=bundesliga&count=100",
         "division-1a": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=belgium&tournament=pro-league&count=100",
         "champions": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=international-clubs&tournament=uefa-champions-league&count=100",
+        "euro": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=international&tournament=uefa-euro--qualification&count=5",
     },
     "basketball": {
         # "nba": "https://api.trustdice.win/sports/tournament/?lang=en&sport=basketball&tag=upcoming&category=usa&tournament=nba&count=100",
