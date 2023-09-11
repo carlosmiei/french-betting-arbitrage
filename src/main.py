@@ -68,7 +68,7 @@ async def get_competition_games(name, exchange, competition):
 
 
 async def check_competition(competition):
-    log.log("Checking competition: {}".format(competition))
+    now = time.time()
     results = await asyncio.gather(
         get_competition_games("kineko", kineko, competition),
         get_competition_games("trustdice", trustdice, competition),
@@ -83,6 +83,8 @@ async def check_competition(competition):
         get_competition_games("bitsler", bitsler, competition),
         get_competition_games("thunderpick", thunderpick, competition),
     )
+    after = time.time()
+    log.log(f"Got data from competition: {competition} took {after - now} seconds")
     # # # get_competition_games(
     # # #     "jackbit", jackbit, competition
     # # # ),  # exactly the same as freshbet
@@ -115,8 +117,6 @@ async def check_competition(competition):
                 g = arb.get_game(game, bookmakers[bookmaker])
                 if is_valid_game(g):
                     games[bookmaker] = g
-                # else:
-                #     log.log(f"[{bookmaker}][{competition}] Invalid game, skipping: {g}")
             except:
                 log.log(
                     "Error while retrieving games: {}".format(traceback.format_exc())
@@ -125,6 +125,9 @@ async def check_competition(competition):
             arb.arb_football(games)
         if competition["sport"] == "basketball":
             arb.arb_basketball(games)
+
+    after_arb = time.time()
+    log.log(f"Arbitrage calculation took {after_arb - after} seconds")
 
 
 async def start():
