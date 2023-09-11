@@ -14,7 +14,7 @@ competition_urls = {
         "liga": "https://www.betseven13.com/iapi/sportsbook/v2/tournaments/8",
         "premier-league": "https://www.betseven13.com/iapi/sportsbook/v2/tournaments/17",
         "serie-a": "https://www.betseven13.com/iapi/sportsbook/v2/tournaments/23",
-        "primeira": "https://www.betseven13.com/iapi/sportsbook/v2/sports/1",
+        "primeira": "https://www.betseven13.com/iapi/sportsbook/v2/tournaments/238",
         "serie-a-brasil": "https://www.betseven13.com/iapi/sportsbook/v2/tournaments/325",
         # "bundesliga-austria": get_url(2950),
         # "division-1a": "",
@@ -58,6 +58,8 @@ async def get_games(competition):
     if json is None:
         return None
     games = []
+    if json["data"] is None:
+        return
     game_elements = json["data"]["events"]
     for el in game_elements:
         participants = el["participants"]
