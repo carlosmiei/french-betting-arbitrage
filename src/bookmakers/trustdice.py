@@ -24,6 +24,9 @@ competition_urls = {
         "champions": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=international-clubs&tournament=uefa-champions-league&count=100",
         "euro": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=international&tournament=uefa-euro--qualification&count=5",
     },
+    "american-football": {
+        "nfl": "https://api.trustdice.win/sports/tournament/?lang=en&sport=american-football&tag=upcoming&category=usa&tournament=nfl&count=100"
+    },
     "basketball": {
         # "nba": "https://api.trustdice.win/sports/tournament/?lang=en&sport=basketball&tag=upcoming&category=usa&tournament=nba&count=100",
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
@@ -70,19 +73,24 @@ async def get_games(competition):
         for market in markets:
             if market is None:
                 continue
-            if market["name"] == "1x2":
+            if market["name"] == "1x2" or market["name"] == "Winner (incl. overtime)":
                 outcomes = market["outcomes"]
                 for outcome in outcomes:
-                    if outcome["outcome_id"] == "1":
+                    if outcome["outcome_id"] == "1" or outcome["outcome_id"] == "4":
                         first = outcome["odds"]
                         team1 = outcome["name"]
-                    elif outcome["outcome_id"] == "3":
+                    elif outcome["outcome_id"] == "3" or outcome["outcome_id"] == "5":
                         third = outcome["odds"]
                         team2 = outcome["name"]
                     elif outcome["outcome_id"] == "2":
                         second = outcome["odds"]
-
-        if first and second and third:
-            odds = [float(first), float(second), float(third)]
-            games.append({"team1": team1, "team2": team2, "odds": odds})
+                if len(outcomes) == 2:
+                    if first and third:
+                        odds = [float(first), float(third)]
+                        games.append({"team1": team1, "team2": team2, "odds": odds})
+                else:
+                    if first and second and third:
+                        odds = [float(first), float(second), float(third)]
+                        games.append({"team1": team1, "team2": team2, "odds": odds})
+                break
     return games

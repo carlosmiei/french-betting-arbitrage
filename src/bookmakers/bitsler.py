@@ -49,10 +49,11 @@ competition_urls = {
         "arabia": 19238,
         "copa-argentina": 1024,
         "champions": 7,
-        "euro": 27
+        "euro": 27,
         # "bundesliga-austria": "",
         # "division-1a": "",
     },
+    "american-football": {"nfl": 31},
     "basketball": {
         # "nba": 3,
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
@@ -110,17 +111,22 @@ async def get_games(competition):
         for market in markets:
             if market is None:
                 continue
-            if market["name"] == "1x2":
+            if market["name"] == "1x2" or market["name"] == "Winner (incl. overtime)":
                 outcomes = market["outcomes"]
                 for outcome in outcomes:
-                    if outcome["id"].startswith("1"):
+                    if outcome["id"].startswith("1") or outcome["id"].startswith("4"):
                         first = round(float(outcome["odds"]), 2)
                     elif outcome["id"].startswith("2"):
                         second = round(float(outcome["odds"]), 2)
-                    elif outcome["id"].startswith("3"):
+                    elif outcome["id"].startswith("3") or outcome["id"].startswith("5"):
                         third = round(float(outcome["odds"]), 2)
 
-        if first and second and third:
-            odds = [float(first), float(second), float(third)]
-            games.append({"team1": team1, "team2": team2, "odds": odds})
+        if len(outcomes) == 2:  # nfl
+            if first and third:
+                odds = [float(first), float(third)]
+                games.append({"team1": team1, "team2": team2, "odds": odds})
+        else:
+            if first and second and third:
+                odds = [float(first), float(second), float(third)]
+                games.append({"team1": team1, "team2": team2, "odds": odds})
     return games

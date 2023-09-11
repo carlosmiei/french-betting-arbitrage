@@ -24,10 +24,11 @@ headers = {
 }
 
 
-def get_data(id, country):
+def get_data(id, country, sport):
+    game_ids = 10 if sport == "football" else 18
     json_data = {
         "gameIds": [
-            10,
+            game_ids,
         ],
         "competitionId": id,
         "country": country,
@@ -59,6 +60,9 @@ competition_urls = {
         "euro": [2945, None],
         "uefa": [164, None],
     },
+    "american-football": {
+        "nfl": [389, 840],
+    },
     "basketball": {
         # "nba": 3,
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
@@ -76,7 +80,7 @@ async def get_page(competition):
         and competition["competition"] in competition_urls[competition["sport"]]
     ):
         id = competition_urls[competition["sport"]][competition["competition"]]
-        body = get_data(id[0], id[1])
+        body = get_data(id[0], id[1], competition["sport"])
     else:
         return None
     async with get_session().post(
@@ -104,11 +108,19 @@ async def get_games(competition):
         team1 = el["teams"]["home"]["name"]
         team2 = el["teams"]["away"]["name"]
         market = el["market"]
-        first = market["home"]["odds"]
-        second = market["draw"]["odds"]
-        third = market["away"]["odds"]
+        competition = el["competition"]["name"]
+        if competition == "NFL":
+            first = market["home"]["odds"]
+            third = market["away"]["odds"]
+            if first and third:
+                odds = [float(first), float(third)]
+                games.append({"team1": team1, "team2": team2, "odds": odds})
+        else:
+            first = market["home"]["odds"]
+            second = market["draw"]["odds"]
+            third = market["away"]["odds"]
 
-        if first and second and third:
-            odds = [float(first), float(second), float(third)]
-            games.append({"team1": team1, "team2": team2, "odds": odds})
+            if first and second and third:
+                odds = [float(first), float(second), float(third)]
+                games.append({"team1": team1, "team2": team2, "odds": odds})
     return games

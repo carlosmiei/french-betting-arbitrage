@@ -26,6 +26,9 @@ competition_urls = {
         "uefa": "https://sport.bets.io/api/v2/matches?limit=100&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-09T14%3A06%3A48.449Z&tournament_id=35&type=match",
         "euro": "https://sport.bets.io/api/v2/matches?limit=100&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-11T14%3A12%3A07.418Z&tournament_id=4222&type=match",
     },
+    "american-football": {
+        "nfl": "https://sport.bets.io/api/v2/matches?bettable=true&limit=100&match_status=0&sort_by=tournament.priority%3Aasc&sort_by=tournament.id%3Aasc&sort_by=start_time%3Aasc&sort_by=bets_count%3Adesc&sport_key=american-football&start_from=2023-09-11T15%3A14%3A45.318Z&start_to=2023-09-14T15%3A14%3A45.318Z&type=match",
+    },
     "basketball": {
         # "nba": "https://sport.bets.io/api/v2/matches?bettable=true&limit=100&match_status=0&sort_by=tournament.priority%3Aasc&sort_by=tournament.id%3Aasc&sort_by=start_time%3Aasc&sort_by=bets_count%3Adesc&tournament_id=12&type=match",
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
@@ -71,14 +74,25 @@ async def get_games(competition):
             continue
         outcomes = market["outcomes"]
         for outcome in outcomes:
-            if outcome["outcome_external_id"] == "1":
+            if (
+                outcome["outcome_external_id"] == "1"
+                or outcome["outcome_external_id"] == "4"
+            ):
                 first = outcome["odds"] / 1000
             if outcome["outcome_external_id"] == "2":
                 second = outcome["odds"] / 1000
-            if outcome["outcome_external_id"] == "3":
+            if (
+                outcome["outcome_external_id"] == "3"
+                or outcome["outcome_external_id"] == "5"
+            ):
                 third = outcome["odds"] / 1000
 
-        if team1 and team2 and first and second and third:
-            odds = [float(first), float(second), float(third)]
-            games.append({"team1": team1, "team2": team2, "odds": odds})
+        if len(outcomes) == 2:
+            if first and third:
+                odds = [float(first), float(third)]
+                games.append({"team1": team1, "team2": team2, "odds": odds})
+        else:
+            if team1 and team2 and first and second and third:
+                odds = [float(first), float(second), float(third)]
+                games.append({"team1": team1, "team2": team2, "odds": odds})
     return games

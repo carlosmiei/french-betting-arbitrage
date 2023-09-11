@@ -25,6 +25,9 @@ competition_urls = {
         "champions": "https://api.kineko.com/events?time=all&leagues%5B%5D=206677483662241792",
         "euro": "https://api.kineko.com/events?time=all&leagues%5B%5D=193484342966775808",
     },
+    "american-football": {
+        "nfl": "https://api.kineko.com/events?time=all&leagues%5B%5D=196001834805129216"
+    },
     "basketball": {
         # "nba": "https://api.trustdice.win/sports/tournament/?lang=en&sport=basketball&tag=upcoming&category=usa&tournament=nba&count=100",
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
@@ -73,7 +76,7 @@ async def get_games(competition):
             outcomes = winner["outcomes"]
             for outcome in outcomes:
                 participant = None
-                if outcome["name"] == "Winner":
+                if outcome["name"].startswith("Winner"):
                     participant = outcome["participants"][0]["id"]
                 if participant == id1:
                     first = outcome["odds"]
@@ -81,8 +84,12 @@ async def get_games(competition):
                     third = outcome["odds"]
                 else:
                     second = outcome["odds"]
-
-        if first and second and third:
-            odds = [float(first), float(second), float(third)]
-            games.append({"team1": team1, "team2": team2, "odds": odds})
+            if len(outcomes) == 2:
+                if first and third:
+                    odds = [float(first), float(third)]
+                    games.append({"team1": team1, "team2": team2, "odds": odds})
+            else:
+                if first and second and third:
+                    odds = [float(first), float(second), float(third)]
+                    games.append({"team1": team1, "team2": team2, "odds": odds})
     return games

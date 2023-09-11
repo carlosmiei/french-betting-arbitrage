@@ -25,4 +25,5 @@ competitions = [
     {"sport": "football", "competition": "super-lig"},
     {"sport": "basketball", "competition": "nba"},
     {"sport": "basketball", "competition": "euroleague"},
+    {"sport": "american-football", "competition": "nfl"},
 ]

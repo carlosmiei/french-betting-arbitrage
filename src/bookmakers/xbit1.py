@@ -26,8 +26,11 @@ competition_urls = {
         "poland": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=30693&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "arabia": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=16819&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "champions": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=118587&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
-        "euro": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=2463568&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true"
+        "euro": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=2463568&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         # "uefa": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+    },
+    "american-football": {
+        "nfl": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=13&champs=68315&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
     },
     "basketball": {
         # "nba": "",
@@ -78,7 +81,12 @@ async def get_games(competition):
             elif odd["T"] == 3:
                 third = odd["C"]
 
-        if first and second and third:
-            odds = [float(first), float(second), float(third)]
-            games.append({"team1": team1, "team2": team2, "odds": odds})
+        if competition["competition"] == "nfl":
+            if first and third:
+                odds = [float(first), float(third)]
+                games.append({"team1": team1, "team2": team2, "odds": odds})
+        else:
+            if first and second and third:
+                odds = [float(first), float(second), float(third)]
+                games.append({"team1": team1, "team2": team2, "odds": odds})
     return games

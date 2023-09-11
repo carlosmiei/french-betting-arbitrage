@@ -40,17 +40,27 @@ log.init()
 session = None
 
 
-def is_valid_game(game):
+def is_valid_game(game, sport):
     try:
-        cond = (
-            game is not None
-            and game["odds"][0] > 1
-            and game["odds"][1] > 1
-            and game["odds"][2] > 1
-            and game["team1"] is not None
-            and game["team2"] is not None
-        )
-        return cond
+        if sport == "football":
+            cond = (
+                game is not None
+                and game["odds"][0] > 1
+                and game["odds"][1] > 1
+                and game["odds"][2] > 1
+                and game["team1"] is not None
+                and game["team2"] is not None
+            )
+            return cond
+        else:
+            cond = (
+                game is not None
+                and game["odds"][0] > 1
+                and game["odds"][1] > 1
+                and game["team1"] is not None
+                and game["team2"] is not None
+            )
+            return cond
     except:
         return False
 
@@ -115,7 +125,7 @@ async def check_competition(competition):
         for bookmaker in bookmakers:
             try:
                 g = arb.get_game(game, bookmakers[bookmaker])
-                if is_valid_game(g):
+                if is_valid_game(g, competition["sport"]):
                     games[bookmaker] = g
             except:
                 log.log(
@@ -123,7 +133,10 @@ async def check_competition(competition):
                 )
         if competition["sport"] == "football":
             arb.arb_football(games)
-        if competition["sport"] == "basketball":
+        if (
+            competition["sport"] == "basketball"
+            or competition["sport"] == "american-football"
+        ):
             arb.arb_basketball(games)
 
     after_arb = time.time()
