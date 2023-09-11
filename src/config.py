@@ -1,6 +1,13 @@
 discord_url = "https://discord.com/api/webhooks/1148973937305342013/Dh1LGNC_vyCDGElmzMHpBZLmVDydwBzj3V-Je3CRV2EXtnVXVd9cO6VMB9gVlnrpLJB7"
 
 competitions = [
+    {"sport": "football", "competition": "czech"},
+    {"sport": "football", "competition": "chile"},
+    {"sport": "football", "competition": "scotland"},
+    {"sport": "football", "competition": "belarus"},
+    {"sport": "football", "competition": "colombia"},
+    {"sport": "football", "competition": "uruguai"},
+    {"sport": "football", "competition": "ireland"},
     {"sport": "football", "competition": "champions"},
     {"sport": "football", "competition": "euro"},
     {"sport": "football", "competition": "uefa"},

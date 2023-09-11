@@ -22,7 +22,14 @@ competition_urls = {
         "bundesliga-austria": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=austria&tournament=bundesliga&count=100",
         "division-1a": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=belgium&tournament=pro-league&count=100",
         "champions": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=international-clubs&tournament=uefa-champions-league&count=100",
-        "euro": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=international&tournament=uefa-euro--qualification&count=5",
+        "euro": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=international&tournament=uefa-euro--qualification&count=100",
+        "scotland": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=scotland&tournament=premiership&count=100",
+        "czech": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=czech-republic&tournament=1--liga&count=100",
+        "poland": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=poland&tournament=i-liga&count=100",
+        "chile": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=chile&tournament=primera-division&count=100",
+        "ireland": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=ireland&tournament=premier-division&count=100",
+        "colombia": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=colombia&tournament=primera-a--clausura&count=100",
+        "belarus": "https://api.trustdice.win/sports/tournament/?lang=en&sport=soccer&tag=upcoming&category=belarus&tournament=vysshaya-liga&count=100",
     },
     "american-football": {
         "nfl": "https://api.trustdice.win/sports/tournament/?lang=en&sport=american-football&tag=upcoming&category=usa&tournament=nfl&count=100"

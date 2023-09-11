@@ -24,6 +24,13 @@ competition_urls = {
         "russia": "https://api.kineko.com/events?time=all&leagues%5B%5D=208858552861872128",
         "champions": "https://api.kineko.com/events?time=all&leagues%5B%5D=206677483662241792",
         "euro": "https://api.kineko.com/events?time=all&leagues%5B%5D=193484342966775808",
+        "chile": "https://api.kineko.com/events?time=all&leagues%5B%5D=193191553998680320",
+        "belarus": "https://api.kineko.com/events?time=all&leagues%5B%5D=198399782630354944",
+        "colombia": "https://api.kineko.com/events?time=all&leagues%5B%5D=193916186125299712",
+        "ireland": "https://api.kineko.com/events?time=all&leagues%5B%5D=187291626410921984",
+        "uruguai": "https://api.kineko.com/events?time=all&leagues%5B%5D=208858594166329344",
+        "scotland": "https://api.kineko.com/events?time=all&leagues%5B%5D=209887985035005952",
+        "czech": "https://api.kineko.com/events?time=all&leagues%5B%5D=208683427060404224",
     },
     "american-football": {
         "nfl": "https://api.kineko.com/events?time=all&leagues%5B%5D=196001834805129216"

@@ -27,13 +27,20 @@ competition_urls = {
         "arabia": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=16819&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "champions": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=118587&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
         "euro": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&champs=2463568&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "czech": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1%2C3&champs=13589%2C27707&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "chile": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1%2C3&champs=13589%2C28298&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "scotland": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1%2C3&champs=13521%2C13589&count=1000&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "belarus": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1%2C3&champs=13589&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "colombia": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1%2C3&champs=13589%2C214147&count=50&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "uruguai": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1%2C3&champs=13589%2C52183&count=1000&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "ireland": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1%2C3&champs=13589&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true"
         # "uefa": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=1&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
     },
     "american-football": {
-        "nfl": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=13&champs=68315&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
+        "nfl": "https://1xbit1.com/LineFeed/Get1x2_VZip?sports=3&champs=13589&count=100&lng=en&tf=2200000&tz=1&mode=4&country=53&partner=65&getEmpty=true",
     },
     "basketball": {
-        # "nba": "",
+        "",
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
     },
     "tennis": {

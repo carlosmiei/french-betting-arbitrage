@@ -86,12 +86,12 @@ async def check_competition(competition):
         get_competition_games("freshbet", freshbet, competition),
         get_competition_games("stake", stake, competition),
         get_competition_games("vave3", vave3, competition),
-        get_competition_games("betsio", betsio, competition),
         get_competition_games("jazz", jazz, competition),
         get_competition_games("xbit1", xbit1, competition),
-        get_competition_games("bet7", bet7, competition),
         get_competition_games("bitsler", bitsler, competition),
         get_competition_games("thunderpick", thunderpick, competition),
+        get_competition_games("bet7", bet7, competition),
+        get_competition_games("betsio", betsio, competition),
     )
     after = time.time()
     log.log(f"Got data from competition: {competition} took {after - now} seconds")

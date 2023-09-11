@@ -59,6 +59,7 @@ competition_urls = {
         "champions": [164, None],
         "euro": [2945, None],
         "uefa": [164, None],
+        "chile": [716, 152],
     },
     "american-football": {
         "nfl": [389, 840],

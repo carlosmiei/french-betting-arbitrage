@@ -25,11 +25,17 @@ competition_urls = {
         "champions": "https://sport.bets.io/api/v2/matches?limit=100&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-09T14%3A05%3A27.852Z&tournament_id=3&type=match",
         "uefa": "https://sport.bets.io/api/v2/matches?limit=100&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-09T14%3A06%3A48.449Z&tournament_id=35&type=match",
         "euro": "https://sport.bets.io/api/v2/matches?limit=100&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-11T14%3A12%3A07.418Z&tournament_id=4222&type=match",
+        "scotland": "https://sport.bets.io/api/v2/matches?limit=50&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-11T17%3A40%3A27.646Z&tournament_id=6902&type=match",
+        "chile": "https://sport.bets.io/api/v2/matches?limit=50&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-11T17%3A41%3A13.343Z&tournament_id=6881&type=match",
+        "uruguai": "https://sport.bets.io/api/v2/matches?limit=50&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-11T17%3A41%3A44.269Z&tournament_id=1489&type=match",
+        "colombia": "https://sport.bets.io/api/v2/matches?limit=50&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-11T17%3A42%3A39.799Z&tournament_id=2919&type=match",
+        "czech": "https://sport.bets.io/api/v2/matches?limit=50&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-11T17%3A43%3A13.607Z&tournament_id=186&type=match",
     },
     "american-football": {
         "nfl": "https://sport.bets.io/api/v2/matches?bettable=true&limit=100&match_status=0&sort_by=tournament.priority%3Aasc&sort_by=tournament.id%3Aasc&sort_by=start_time%3Aasc&sort_by=bets_count%3Adesc&sport_key=american-football&start_from=2023-09-11T15%3A14%3A45.318Z&start_to=2023-09-14T15%3A14%3A45.318Z&type=match",
     },
     "basketball": {
+        "nba": "https://sport.bets.io/api/v2/matches?limit=100&match_status=2&match_status=3&match_status=4&match_status=5&sort_by=start_time%3Adesc&start_to=2023-09-11T16%3A40%3A15.218Z&tournament_id=12&type=match"
         # "nba": "https://sport.bets.io/api/v2/matches?bettable=true&limit=100&match_status=0&sort_by=tournament.priority%3Aasc&sort_by=tournament.id%3Aasc&sort_by=start_time%3Aasc&sort_by=bets_count%3Adesc&tournament_id=12&type=match",
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
     },

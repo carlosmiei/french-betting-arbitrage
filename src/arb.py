@@ -193,6 +193,8 @@ def optimized_check(games):
 
 def arb_football(games):
     nb_bookmakers = len(games)
+    if nb_bookmakers == 1:
+        return
     combinations = nb_bookmakers**3
     log.log("-- Arbitrage on:")
     for game in games:
@@ -216,6 +218,8 @@ def arb_football(games):
 
 def arb_basketball(games):
     nb_bookmakers = len(games)
+    if nb_bookmakers == 1:
+        return
     combinations = nb_bookmakers**2
     log.log("-- Arbitrage on: ")
     for game in games:
