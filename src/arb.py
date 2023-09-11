@@ -67,25 +67,9 @@ def dec_to_base(num, base):
     return base_num
 
 
-def arb_football(games):
+def complete_check(games):
     nb_bookmakers = len(games)
-    combinations = nb_bookmakers**3
-    log.log("-- Arbitrage on:")
-    for game in games:
-        try:
-            log.log(
-                "{:10}: {} - {} @{}/{}/{}".format(
-                    game,
-                    games[game]["team1"],
-                    games[game]["team2"],
-                    games[game]["odds"][0],
-                    games[game]["odds"][1],
-                    games[game]["odds"][2],
-                )
-            )
-        except:
-            log.log(f"Error while logging game: {game}")
-    log.log("{} combinations possible --".format(combinations))
+    # combinations = nb_bookmakers**3
     comb = list(product(list(games.keys()), repeat=3))
     for i, (b1, b2, b3) in enumerate(comb):
         combination = str(dec_to_base(i, nb_bookmakers)).zfill(3)
@@ -138,6 +122,96 @@ def arb_football(games):
                     " ".join(combination.split()), b1, b2, b3, profit
                 )
             )
+
+
+def optimized_check(games):
+    games_with_bookmarker = [
+        {"bookmarker": key, **value} for key, value in games.items()
+    ]
+
+    N = 2
+    best_first_odds = sorted(
+        games_with_bookmarker, key=lambda x: x["odds"][0], reverse=True
+    )[:N]
+    best_second_odds = sorted(
+        games_with_bookmarker, key=lambda x: x["odds"][1], reverse=True
+    )[:N]
+    best_third_odds = sorted(
+        games_with_bookmarker, key=lambda x: x["odds"][2], reverse=True
+    )[:N]
+
+    for first_team in best_first_odds:
+        b1 = first_team["bookmarker"]
+        for second_team in best_second_odds:
+            b2 = second_team["bookmarker"]
+            for third_team in best_third_odds:
+                b3 = third_team["bookmarker"]
+
+                odds1 = first_team["odds"][0]
+                odds2 = second_team["odds"][1]
+                odds3 = third_team["odds"][2]
+
+                team1 = first_team["team1"]
+                team2 = second_team["team2"]
+
+                profit = arb3(odds1, odds2, odds3)
+                if profit > 0:
+                    stakes = get_stakes3(odds1, odds2, odds3, 10)
+                    log.log("FOUND!!!!")
+                    message = "Abritrage found for [{}-{}] with [{}/{}/{}] with odds [{}/{}/{}]: {:.2f}%".format(
+                        team1,
+                        team2,
+                        b1,
+                        b2,
+                        b3,
+                        odds1,
+                        odds2,
+                        odds3,
+                        profit,
+                    )
+                    if message not in cache:
+                        stake_message = "> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for N, **{}**@{} on {} for B".format(
+                            stakes["rounded"][0],
+                            odds1,
+                            b1,
+                            stakes["rounded"][1],
+                            odds2,
+                            b2,
+                            stakes["rounded"][2],
+                            odds3,
+                            b3,
+                        )
+                        cache.append(message)
+                        log.discord(message)
+                        log.discord(stake_message)
+                        log.log(message)
+                        log.log(stake_message)
+                    else:
+                        log.log(f"Duplicated opportunity, cache length: {len(cache)}")
+                    log.log("({:10}/{:10}/{:10}) {:.2f}%".format(b1, b2, b3, profit))
+
+
+def arb_football(games):
+    nb_bookmakers = len(games)
+    combinations = nb_bookmakers**3
+    log.log("-- Arbitrage on:")
+    for game in games:
+        try:
+            log.log(
+                "{:10}: {} - {} @{}/{}/{}".format(
+                    game,
+                    games[game]["team1"],
+                    games[game]["team2"],
+                    games[game]["odds"][0],
+                    games[game]["odds"][1],
+                    games[game]["odds"][2],
+                )
+            )
+        except:
+            log.log(f"Error while logging game: {game}")
+    log.log("{} combinations possible --".format(combinations))
+    optimized_check(games)
+    # complete_check(games)
 
 
 def arb_basketball(games):
