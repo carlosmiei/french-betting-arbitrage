@@ -1,7 +1,8 @@
 discord_url = "https://discord.com/api/webhooks/1148973937305342013/Dh1LGNC_vyCDGElmzMHpBZLmVDydwBzj3V-Je3CRV2EXtnVXVd9cO6VMB9gVlnrpLJB7"
 
 competitions = [
-    # {"sport": "football", "competition": "live"},
+    {"sport": "football", "competition": "premier-league"},
+    {"sport": "football", "competition": "live"},
     {"sport": "football", "competition": "czech"},
     {"sport": "football", "competition": "chile"},
     {"sport": "football", "competition": "scotland"},
@@ -23,7 +24,6 @@ competitions = [
     {"sport": "football", "competition": "croatia"},
     {"sport": "football", "competition": "liga"},
     {"sport": "football", "competition": "bundesliga"},
-    {"sport": "football", "competition": "premier-league"},
     {"sport": "football", "competition": "serie-a"},
     {"sport": "football", "competition": "primeira"},
     {"sport": "football", "competition": "serie-a-brasil"},
