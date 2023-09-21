@@ -31,6 +31,7 @@ competition_urls = {
         "uruguai": "https://api.kineko.com/events?time=all&leagues%5B%5D=208858594166329344",
         "scotland": "https://api.kineko.com/events?time=all&leagues%5B%5D=209887985035005952",
         "czech": "https://api.kineko.com/events?time=all&leagues%5B%5D=208683427060404224",
+        "live": "https://api.kineko.com/events?time=live&language=1",
     },
     "american-football": {
         "nfl": "https://api.kineko.com/events?time=all&leagues%5B%5D=196001834805129216"
@@ -63,10 +64,70 @@ async def get_page(competition):
     return response
 
 
+def get_live_games(response):
+    competitions = response["data"][0]["data"]
+    games = []
+    for league in competitions:
+        for game in league["data"]:
+            if game["is_live"] == 1:
+                first = None
+                second = None
+                third = None
+                open = False
+                team1 = game["participants"][0]["name"]
+                id1 = game["participants"][0]["id"]
+                id2 = game["participants"][1]["id"]
+                team2 = game["participants"][1]["name"]
+                markets = game["markets"]
+                if "winner" in markets:
+                    winner = markets["winner"]
+                    open = winner["open"]
+                    outcomes = winner["outcomes"]
+                    for outcome in outcomes:
+                        participant = None
+                        if outcome["name"].startswith("Winner"):
+                            participant = outcome["participants"][0]["id"]
+                        if participant == id1:
+                            first = outcome["odds"]
+                        elif participant == id2:
+                            third = outcome["odds"]
+                        else:
+                            second = outcome["odds"]
+                    if len(outcomes) == 2:
+                        if first and third:
+                            odds = [float(first), float(third)]
+                            games.append(
+                                {
+                                    "team1": team1,
+                                    "team2": team2,
+                                    "odds": odds,
+                                    "open": open,
+                                }
+                            )
+                    else:
+                        if first and second and third:
+                            odds = [float(first), float(second), float(third)]
+                            games.append(
+                                {
+                                    "team1": team1,
+                                    "team2": team2,
+                                    "odds": odds,
+                                    "open": open,
+                                }
+                            )
+    return games
+
+
 async def get_games(competition):
     response = await get_page(competition)
     if response is None:
         return None
+    if response["success"] is False:
+        return None
+    if len(response["data"]) == 0:
+        return None
+    if competition["competition"] == "live":
+        return get_live_games(response)
     result = response["data"][0]["data"][0]["data"]
     games = []
     for el in result:
@@ -81,6 +142,7 @@ async def get_games(competition):
         if "winner" in markets:
             winner = markets["winner"]
             outcomes = winner["outcomes"]
+            active = winner["open"]
             for outcome in outcomes:
                 participant = None
                 if outcome["name"].startswith("Winner"):
@@ -94,9 +156,13 @@ async def get_games(competition):
             if len(outcomes) == 2:
                 if first and third:
                     odds = [float(first), float(third)]
-                    games.append({"team1": team1, "team2": team2, "odds": odds})
+                    games.append(
+                        {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                    )
             else:
                 if first and second and third:
                     odds = [float(first), float(second), float(third)]
-                    games.append({"team1": team1, "team2": team2, "odds": odds})
+                    games.append(
+                        {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                    )
     return games

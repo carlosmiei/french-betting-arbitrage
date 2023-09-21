@@ -67,6 +67,8 @@ async def get_games(competition):
     if response is None:
         return None
     result = response["results"]
+    if (len(result)) == 0:
+        return None
     keys = list(result.keys())
     game_elements = result[keys[0]]
     games = []
@@ -82,6 +84,7 @@ async def get_games(competition):
                 continue
             if market["name"] == "1x2" or market["name"] == "Winner (incl. overtime)":
                 outcomes = market["outcomes"]
+                active = market["status"] == 1
                 for outcome in outcomes:
                     if outcome["outcome_id"] == "1" or outcome["outcome_id"] == "4":
                         first = outcome["odds"]
@@ -94,10 +97,24 @@ async def get_games(competition):
                 if len(outcomes) == 2:
                     if first and third:
                         odds = [float(first), float(third)]
-                        games.append({"team1": team1, "team2": team2, "odds": odds})
+                        games.append(
+                            {
+                                "team1": team1,
+                                "team2": team2,
+                                "odds": odds,
+                                "active": active,
+                            }
+                        )
                 else:
                     if first and second and third:
                         odds = [float(first), float(second), float(third)]
-                        games.append({"team1": team1, "team2": team2, "odds": odds})
+                        games.append(
+                            {
+                                "team1": team1,
+                                "team2": team2,
+                                "odds": odds,
+                                "active": active,
+                            }
+                        )
                 break
     return games

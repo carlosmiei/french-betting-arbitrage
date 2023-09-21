@@ -80,8 +80,10 @@ async def get_games(competition):
         if int(id) in events:
             team1 = events[int(id)]["team1"]
             team2 = events[int(id)]["team2"]
+            active = False
             for market in array:
                 if market["id"] == 621:
+                    active = market["status"] == 1
                     outcomes = market["outcomes"]
                     for outcome in outcomes:
                         if outcome["id"] == 1:
@@ -93,5 +95,7 @@ async def get_games(competition):
 
             if first and second and third:
                 odds = [float(first), float(second), float(third)]
-                games.append({"team1": team1, "team2": team2, "odds": odds})
+                games.append(
+                    {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                )
     return games

@@ -12,6 +12,15 @@ mismatch_pairs = [
 cache = []
 
 
+def save_to_cache(team1, team2, bookmaker1, bookmaker2, profit):
+    key = f"{team1}-{team2}-{bookmaker1}-{bookmaker2}"
+    # if key not in cache:
+    #     cache[key] = [profit]
+    #     return True
+    # else:
+    #     return False
+
+
 def str_similarity(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
@@ -28,6 +37,8 @@ def get_game(game, others):
         if sim > m:
             m = sim
             m_obj = other
+    if m_obj is None:
+        return None
     if str_similarity(game["team1"], m_obj["team1"]) < 0.81:
         return None
     if str_similarity(game["team2"], m_obj["team2"]) < 0.81:
@@ -141,8 +152,12 @@ def optimized_check(games):
     )[:N]
 
     for first_team in best_first_odds:
+        if "active" in first_team and first_team["active"] == False:
+            continue
         b1 = first_team["bookmarker"]
         for second_team in best_second_odds:
+            if "active" in second_team and second_team["active"] == False:
+                continue
             b2 = second_team["bookmarker"]
             for third_team in best_third_odds:
                 b3 = third_team["bookmarker"]
@@ -156,8 +171,8 @@ def optimized_check(games):
 
                 profit = arb3(odds1, odds2, odds3)
                 if profit > 0:
-                    stakes = get_stakes3(odds1, odds2, odds3, 10)
-                    log.log("FOUND!!!!")
+                    # stakes = get_stakes3(odds1, odds2, odds3, 10)
+                    # log.log("FOUND!!!!")
                     message = "Abritrage found for [{}-{}] with [{}/{}/{}] with odds [{}/{}/{}]: {:.2f}%".format(
                         team1,
                         team2,
@@ -170,22 +185,22 @@ def optimized_check(games):
                         profit,
                     )
                     if message not in cache:
-                        stake_message = "> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for N, **{}**@{} on {} for B".format(
-                            stakes["rounded"][0],
-                            odds1,
-                            b1,
-                            stakes["rounded"][1],
-                            odds2,
-                            b2,
-                            stakes["rounded"][2],
-                            odds3,
-                            b3,
-                        )
+                        # stake_message = "> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for N, **{}**@{} on {} for B".format(
+                        #     stakes["rounded"][0],
+                        #     odds1,
+                        #     b1,
+                        #     stakes["rounded"][1],
+                        #     odds2,
+                        #     b2,
+                        #     stakes["rounded"][2],
+                        #     odds3,
+                        #     b3,
+                        # )
                         cache.append(message)
                         log.discord(message)
-                        log.discord(stake_message)
+                        # log.discord(stake_message)
                         log.log(message)
-                        log.log(stake_message)
+                        # log.log(stake_message)
                     else:
                         log.log(f"Duplicated opportunity, cache length: {len(cache)}")
                     log.log("({:10}/{:10}/{:10}) {:.2f}%".format(b1, b2, b3, profit))
@@ -243,7 +258,7 @@ def arb_basketball(games):
         )
         if profit > 0:
             log.log("FOUND!!!!")
-            stakes = get_stakes2(games[b1]["odds"][0], games[b2]["odds"][1], 10)
+            # stakes = get_stakes2(games[b1]["odds"][0], games[b2]["odds"][1], 10)
             log.discord(
                 "Abritrage found for **{}**-**{}** with **{}/{}** with odds {}/{}: {:.2f}%".format(
                     games[b1]["team1"],
@@ -255,16 +270,16 @@ def arb_basketball(games):
                     profit,
                 )
             )
-            log.discord(
-                "> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for B".format(
-                    stakes["rounded"][0],
-                    games[b1]["odds"][0],
-                    b1,
-                    stakes["rounded"][1],
-                    games[b2]["odds"][1],
-                    b2,
-                )
-            )
+            # log.discord(
+            #     "> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for B".format(
+            #         stakes["rounded"][0],
+            #         games[b1]["odds"][0],
+            #         b1,
+            #         stakes["rounded"][1],
+            #         games[b2]["odds"][1],
+            #         b2,
+            #     )
+            # )
 
             log.log(
                 "{}: ({:10}/{:10}) {:.2f}%".format(

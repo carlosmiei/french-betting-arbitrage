@@ -32,11 +32,11 @@ competition_urls = {
         "euro": "https://sportservice.inplaynet.tech/api/prematch/getprematchgameall/de/52/?games=,-1686805,-5438584,-5458599,-5438586,-5438588,-5494458,-5438592,-5458637,-5438583,-5438585,-5494454,-5438587,-5438589,-5438590,-5494456,-5438591,-5494457,",
     },
     "basketball": {
-        "nba": get_url(2980),
+        # "nba": get_url(2980),
         # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
     },
     "tennis": {
-        "us-open-men": get_url(3027),
+        # "us-open-men": get_url(3027),
     },
 }
 
@@ -91,16 +91,23 @@ async def get_games(competition):
             first = None
             second = None
             third = None
+            active = False
             for odd in odds:
                 if odd["pos"] == 1:
                     first = odd["coef"]
+                    active = not odd["lock"]
                 elif odd["pos"] == 2:
                     second = odd["coef"]
+                    active = not odd["lock"]
                 elif odd["pos"] == 3:
                     third = odd["coef"]
+                    active = not odd["lock"]
+
             if first and second and third and team1 and team2:
                 odds = [float(first), float(second), float(third)]
-                games.append({"team1": team1, "team2": team2, "odds": odds})
+                games.append(
+                    {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                )
         except:
             continue
     return games

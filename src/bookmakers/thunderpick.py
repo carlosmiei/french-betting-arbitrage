@@ -109,13 +109,16 @@ async def get_games(competition):
         team1 = el["teams"]["home"]["name"]
         team2 = el["teams"]["away"]["name"]
         market = el["market"]
+        active = market["status"] == 1
         competition = el["competition"]["name"]
         if competition == "NFL":
             first = market["home"]["odds"]
             third = market["away"]["odds"]
             if first and third:
                 odds = [float(first), float(third)]
-                games.append({"team1": team1, "team2": team2, "odds": odds})
+                games.append(
+                    {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                )
         else:
             first = market["home"]["odds"]
             second = market["draw"]["odds"]
@@ -123,5 +126,7 @@ async def get_games(competition):
 
             if first and second and third:
                 odds = [float(first), float(second), float(third)]
-                games.append({"team1": team1, "team2": team2, "odds": odds})
+                games.append(
+                    {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                )
     return games
