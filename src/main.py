@@ -23,6 +23,7 @@ import bookmakers.xbit1 as xbit1
 import bookmakers.bet7 as bet7
 import bookmakers.bitsler as bitsler
 import bookmakers.thunderpick as thunderpick
+import bookmakers.ivibets as ivibets
 import arb
 import sys
 import log
@@ -82,6 +83,7 @@ async def get_competition_games(name, exchange, competition):
 async def check_competition(competition):
     now = time.time()
     results = await asyncio.gather(
+        get_competition_games("ivibets", ivibets, competition),
         get_competition_games("cloudbet", cloudbet, competition),
         get_competition_games("justbit", justbit, competition),
         get_competition_games("kineko", kineko, competition),
