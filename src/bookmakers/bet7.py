@@ -78,6 +78,7 @@ async def get_games(competition):
         items = el["markets"]
         for item in items:
             if item["name"] == "1x2":
+                active = item["status"] == 1
                 odds = item["odds"]
                 for odd in odds:
                     if odd["type"] == 1:
@@ -88,5 +89,5 @@ async def get_games(competition):
                         third = odd["value"]
         if first and second and third:
             odds = [float(first), float(second), float(third)]
-            games.append({"team1": team1, "team2": team2, "odds": odds})
+            games.append({"team1": team1, "team2": team2, "odds": odds, "active": 1})
     return games

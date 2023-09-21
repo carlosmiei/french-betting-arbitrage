@@ -65,10 +65,13 @@ async def get_games(competition):
         odds = []
         for item in items:
             if item["Name"] == "1x2":
+                active = item["Status"] == 1
                 items = item["Items"]
                 first = items[0]["Price"]
                 second = items[1]["Price"]
                 third = items[2]["Price"]
                 odds = [float(first), float(second), float(third)]
-                games.append({"team1": team1, "team2": team2, "odds": odds})
+                games.append(
+                    {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                )
     return games

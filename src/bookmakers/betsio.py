@@ -79,26 +79,34 @@ async def get_games(competition):
         if market is None:
             continue
         outcomes = market["outcomes"]
+        active = False
         for outcome in outcomes:
             if (
                 outcome["outcome_external_id"] == "1"
                 or outcome["outcome_external_id"] == "4"
             ):
                 first = outcome["odds"] / 1000
+                active = outcome["active"]
             if outcome["outcome_external_id"] == "2":
                 second = outcome["odds"] / 1000
+                active = outcome["active"]
             if (
                 outcome["outcome_external_id"] == "3"
                 or outcome["outcome_external_id"] == "5"
             ):
                 third = outcome["odds"] / 1000
+                active = outcome["active"]
 
         if len(outcomes) == 2:
             if first and third:
                 odds = [float(first), float(third)]
-                games.append({"team1": team1, "team2": team2, "odds": odds})
+                games.append(
+                    {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                )
         else:
             if team1 and team2 and first and second and third:
                 odds = [float(first), float(second), float(third)]
-                games.append({"team1": team1, "team2": team2, "odds": odds})
+                games.append(
+                    {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                )
     return games
