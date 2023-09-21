@@ -93,7 +93,7 @@ async def check_competition(competition):
         get_competition_games("kineko", kineko, competition),
         get_competition_games("trustdice", trustdice, competition),
         get_competition_games("betplay", betplay, competition),
-        get_competition_games("freshbet", freshbet, competition),
+        # get_competition_games("freshbet", freshbet, competition),
         get_competition_games("stake", stake, competition),
         get_competition_games("vave3", vave3, competition),
         get_competition_games("jazz", jazz, competition),
