@@ -170,7 +170,7 @@ def optimized_check(games):
                 team2 = second_team["team2"]
 
                 profit = arb3(odds1, odds2, odds3)
-                if profit > 0:
+                if profit > 0.8:
                     # stakes = get_stakes3(odds1, odds2, odds3, 10)
                     # log.log("FOUND!!!!")
                     message = "Abritrage found for [{}-{}] with [{}/{}/{}] with odds [{}/{}/{}]: {:.2f}%".format(
