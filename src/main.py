@@ -12,6 +12,7 @@ import bookmakers.trustdice as trustdice
 import bookmakers.justbit as justbit
 import bookmakers.cloudbet as cloudbet
 import bookmakers.everygame as everygame
+import bookmakers.betcoin as betcoin
 
 # import bookmakers.sportsbetio as sportsbetio
 import bookmakers.kineko as kineko
@@ -84,6 +85,7 @@ async def get_competition_games(name, exchange, competition):
 async def check_competition(competition):
     now = time.time()
     results = await asyncio.gather(
+        get_competition_games("betcoin", betcoin, competition),
         get_competition_games("everygame", everygame, competition),
         get_competition_games("ivibets", ivibets, competition),
         get_competition_games("cloudbet", cloudbet, competition),
