@@ -116,11 +116,13 @@ async def get_games(competition):
         team1 = el["home"]["name"]
         team2 = el["away"]["name"]
         markets = el["defaultMarkets"]
+        active = False
         for market in markets:
             if market is None:
                 continue
             if market["name"] == "1x2" or market["name"] == "Winner (incl. overtime)":
                 outcomes = market["outcomes"]
+                active = market["status"] == 1
                 for outcome in outcomes:
                     if outcome["id"].startswith("1") or outcome["id"].startswith("4"):
                         first = round(float(outcome["odds"]), 2)
@@ -132,9 +134,13 @@ async def get_games(competition):
         if len(outcomes) == 2:  # nfl
             if first and third:
                 odds = [float(first), float(third)]
-                games.append({"team1": team1, "team2": team2, "odds": odds})
+                games.append(
+                    {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                )
         else:
             if first and second and third:
                 odds = [float(first), float(second), float(third)]
-                games.append({"team1": team1, "team2": team2, "odds": odds})
+                games.append(
+                    {"team1": team1, "team2": team2, "odds": odds, "active": active}
+                )
     return games
