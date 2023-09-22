@@ -176,7 +176,7 @@ def optimized_check(games):
 
                 profit = arb3(odds1, odds2, odds3)
                 profit = round(profit, 3)
-                if profit > -5:
+                if profit > 0.6:
                     # stakes = get_stakes3(odds1, odds2, odds3, 10)
                     # log.log("FOUND!!!!")
                     message = "Abritrage found for [{}-{}] with [{}/{}/{}] with odds [{}/{}/{}]: {:.2f}%".format(
@@ -293,7 +293,7 @@ def arb_basketball(games):
             games[b2]["odds"][1],
         )
         profit = round(profit, 3)
-        if profit > 0:
+        if profit > 0.8:
             log.log("FOUND!!!!")
             # stakes = get_stakes2(games[b1]["odds"][0], games[b2]["odds"][1], 10)
             log.discord(
