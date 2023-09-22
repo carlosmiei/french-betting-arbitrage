@@ -2,23 +2,13 @@ from difflib import SequenceMatcher
 import log
 from itertools import permutations
 from itertools import product
-
+import time
+import cache
 
 mismatch_pairs = [
     ["MelbourneCity", "MelbourneVictory"],
     ["MelbourneCityFC", "MelbourneVictoryFC"],
 ]
-
-cache = []
-
-
-def save_to_cache(team1, team2, bookmaker1, bookmaker2, profit):
-    key = f"{team1}-{team2}-{bookmaker1}-{bookmaker2}"
-    # if key not in cache:
-    #     cache[key] = [profit]
-    #     return True
-    # else:
-    #     return False
 
 
 def str_similarity(a, b):
@@ -140,6 +130,21 @@ def optimized_check(games):
         {"bookmarker": key, **value} for key, value in games.items()
     ]
 
+    repeated_opportunities = []
+    old_opportunities = []
+    comb = list(product(list(games.keys()), repeat=3))
+    for _i, (b1, b2, b3) in enumerate(comb):
+        t1 = games[b1]["team1"]
+        t2 = games[b1]["team2"]
+        key = f"{t1}-{t2}-{b1}-{b2}-{b3}"
+        entry = cache.get_cache_entry(t1, t2, b1, b2, b3)
+        if entry is not None:
+            profits = list(entry.keys())
+            for profit in profits:
+                value = cache.get_cache_entry(t1, t2, b1, b2, b3, profit)
+                if value["active"]:
+                    old_opportunities.append(value)
+
     N = 2
     best_first_odds = sorted(
         games_with_bookmarker, key=lambda x: x["odds"][0], reverse=True
@@ -170,7 +175,8 @@ def optimized_check(games):
                 team2 = second_team["team2"]
 
                 profit = arb3(odds1, odds2, odds3)
-                if profit > 0.8:
+                profit = round(profit, 3)
+                if profit > -5:
                     # stakes = get_stakes3(odds1, odds2, odds3, 10)
                     # log.log("FOUND!!!!")
                     message = "Abritrage found for [{}-{}] with [{}/{}/{}] with odds [{}/{}/{}]: {:.2f}%".format(
@@ -184,26 +190,56 @@ def optimized_check(games):
                         odds3,
                         profit,
                     )
-                    if message not in cache:
-                        # stake_message = "> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for N, **{}**@{} on {} for B".format(
-                        #     stakes["rounded"][0],
-                        #     odds1,
-                        #     b1,
-                        #     stakes["rounded"][1],
-                        #     odds2,
-                        #     b2,
-                        #     stakes["rounded"][2],
-                        #     odds3,
-                        #     b3,
-                        # )
-                        cache.append(message)
+                    prev_op = cache.get_cache_entry(team1, team2, b1, b2, b3, profit)
+
+                    if prev_op is None:
+                        cache.save_to_cache(
+                            team1, team2, b1, b2, b3, profit, [odds1, odds2, odds3]
+                        )
                         log.discord(message)
-                        # log.discord(stake_message)
                         log.log(message)
-                        # log.log(stake_message)
                     else:
-                        log.log(f"Duplicated opportunity, cache length: {len(cache)}")
+                        repeated_opportunities.append(
+                            f"{team1}-{team2}-{b1}-{b2}-{b3}-{profit}"
+                        )
                     log.log("({:10}/{:10}/{:10}) {:.2f}%".format(b1, b2, b3, profit))
+
+    detect_opportunities_gone(old_opportunities, repeated_opportunities, games)
+
+
+def detect_opportunities_gone(old_opportunities, repeated_opportunities, games):
+    # detect missing opportunities since the last run
+    for old in old_opportunities:  # {t1,t2,b1,b2,b3, init_time, profit}
+        key = f"{old['t1']}-{old['t2']}-{old['b1']}-{old['b2']}-{old['b3']}"
+        key_with_profit = f"{key}-{old['profit']}"
+        if key_with_profit not in repeated_opportunities:
+            init = old["init_time"]
+            now = round(time.time())
+            elapsed = now - init
+            # get current odds:
+            b1_odds = games[old["b1"]]["odds"]
+            b2_odds = games[old["b2"]]["odds"]
+            b3_odds = games[old["b3"]]["odds"]
+            odds = [b1_odds[0], b2_odds[1], b3_odds[2]]
+            profit_on_close = round(arb3(odds[0], odds[1], odds[2]), 3)
+            cache.close_opportunity(
+                old["t1"],
+                old["t2"],
+                old["b1"],
+                old["b2"],
+                old["b3"],
+                old["profit"],
+                now,
+                elapsed,
+                odds,
+                profit_on_close,
+            )
+            log.discord(
+                f"[Gone] [{old['t1']}-{old['t2']}] [{old['b1']}/{old['b2']}/{old['b3']}] Initial profit: {old['profit']:.2}% Profit on close: {profit_on_close:.2}% gone after ({elapsed:.2f} seconds. Initial odds: {old['init_odds']}, current odds: {odds}"
+            )
+        # else:
+        #     # log.log(f"Opportunity {key_with_profit} is still active")
+        #     pass
 
 
 def arb_football(games):
@@ -256,6 +292,7 @@ def arb_basketball(games):
             games[b1]["odds"][0],
             games[b2]["odds"][1],
         )
+        profit = round(profit, 3)
         if profit > 0:
             log.log("FOUND!!!!")
             # stakes = get_stakes2(games[b1]["odds"][0], games[b2]["odds"][1], 10)

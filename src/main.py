@@ -1,9 +1,3 @@
-# import bookmakers.winamax as winamax
-# import bookmakers.pmu as pmu
-# import bookmakers.betclic as betclic
-# import bookmakers.zebet as zebet
-# import bookmakers.netbet as netbet
-# import bookmakers.ps3838 as ps3838
 import bookmakers.stake as stake
 import bookmakers.freshbet as freshbet
 import bookmakers.jackbit as jackbit
@@ -16,8 +10,6 @@ import bookmakers.betcoin as betcoin
 
 # import bookmakers.sportsbetio as sportsbetio
 import bookmakers.kineko as kineko
-
-# import bookmakers.chipstars as chipstars
 import bookmakers.vave3 as vave3
 import bookmakers.betsio as betsio
 import bookmakers.jazz as jazz
@@ -36,9 +28,10 @@ import asyncio
 import sys
 import aiohttp
 from session_manager import set_session, close_session, proxies, set_german_session
+import cache
 
 log.init()
-
+cache.load()
 # wolf.bet can be added but the API is confusing
 
 
@@ -93,7 +86,7 @@ async def check_competition(competition):
         get_competition_games("kineko", kineko, competition),
         get_competition_games("trustdice", trustdice, competition),
         get_competition_games("betplay", betplay, competition),
-        # get_competition_games("freshbet", freshbet, competition),
+        # get_competition_games("jackbit", freshbet, competition),
         get_competition_games("stake", stake, competition),
         get_competition_games("vave3", vave3, competition),
         get_competition_games("jazz", jazz, competition),
@@ -105,13 +98,6 @@ async def check_competition(competition):
     )
     after = time.time()
     log.log(f"Got data from competition: {competition} took {after - now} seconds")
-    # # # get_competition_games(
-    # # #     "jackbit", jackbit, competition
-    # # # ),  # exactly the same as freshbet
-    # # # # get_competition_games(
-    # # # #     "sportsbetio", sportsbetio, competition
-    # # # # ),  # exactly the same as stake
-    # # get_competition_games("chipstars", chipstars, competition),  # requires seleniumk
 
     bookmakers = {}
     for result in results:
