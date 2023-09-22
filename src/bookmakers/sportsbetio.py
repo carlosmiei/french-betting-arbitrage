@@ -2,30 +2,34 @@ from session_manager import get_session
 
 
 def get_url(id):
-    return f"https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=stake&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=stake&sportids=66&categoryids=0&champids={id}&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-05T16%3A20%3A00.000Z&endDate=2023-09-12T16%3A20%3A00.000Z"
+    return f"https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=sportsbetio&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=sportsbetio&sportids=66&categoryids=0&champids={id}&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0"
 
 
-# first
-# https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=stake&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=stake&sportids=66&categoryids=0&champids=2936&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-05T16%3A20%3A00.000Z&endDate=2023-09-12T16%3A20%3A00.000Z
-# https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=stake&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=stake&sportids=66&categoryids=0&champids=2936&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-05T16:20:00.000Z&endDate=2023-09-12T16:20:00.000Z
 competition_urls = {
     "football": {
-        "ligue1": "https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=sportsbetio&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=sportsbetio&sportids=66&categoryids=0&champids=2943&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-06T11%3A25%3A00.000Z&endDate=2023-09-13T11%3A25%3A00.000Z",
-        "liga": "https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=sportsbetio&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=sportsbetio&sportids=66&categoryids=0&champids=2941&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-06T11%3A24%3A00.000Z&endDate=2023-09-13T11%3A24%3A00.000Z",
-        "premier-league": "https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=sportsbetio&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=sportsbetio&sportids=66&categoryids=0&champids=2936&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-06T11%3A23%3A00.000Z&endDate=2023-09-13T11%3A23%3A00.000Z",
-        "serie-a": "https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=sportsbetio&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=sportsbetio&sportids=66&categoryids=0&champids=2942&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-06T11%3A25%3A00.000Z&endDate=2023-09-13T11%3A25%3A00.000Z",
-        "primeira": "https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=sportsbetio&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=sportsbetio&sportids=66&categoryids=0&champids=3152&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-06T11%3A26%3A00.000Z&endDate=2023-09-13T11%3A26%3A00.000Z",
-        "serie-a-brasil": "https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=sportsbetio&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=sportsbetio&sportids=66&categoryids=0&champids=11318&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-06T11%3A25%3A00.000Z&endDate=2023-09-13T11%3A25%3A00.000Z",
-        # "bundesliga-austria": get_url(2950),
-        "division-1a": "https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=sportsbetio&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=sportsbetio&sportids=66&categoryids=0&champids=2965&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-06T11%3A26%3A00.000Z&endDate=2023-09-13T11%3A26%3A00.000Z",
+        "ligue1": 2943,
+        "liga": 2941,
+        "premier-league": 2936,
+        "serie-a": 2942,
+        "primeira": 3152,
+        "serie-a-brasil": 11318,
+        "bundesliga-austria": 2950,
+        "division-1a": 2965,
+        "mls": 4610,
+        "eredivise": 3065,
+        "copa-argentina": 3916,
+        "colombia": 3857,
+        "arabia": 2934,
+        "division-1a": 2965,
+        "chile": 3837,
+        "belarus": 5285,
+        "czech": 3105,
+        "russia": 3140,
+        "canada": 5086,
+        "super-lig": 2951,
     },
-    "basketball": {
-        # "nba": "https://sb2frontend-altenar2.biahosted.com/api/Sportsbook/GetEvents?timezoneOffset=-60&langId=8&skinName=sportsbetio&configId=12&culture=en-GB&countryCode=GB&deviceType=Desktop&numformat=en&integration=sportsbetio&sportids=67&categoryids=0&champids=2980&group=AllEvents&period=periodall&withLive=false&outrightsDisplay=none&marketTypeIds=&couponType=0&marketGroupId=0&startDate=2023-09-06T11%3A27%3A00.000Z&endDate=2023-09-13T11%3A27%3A00.000Z",
-        # "euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
-    },
-    "tennis": {
-        "us-open-men": get_url(3027),
-    },
+    "basketball": {},
+    "tennis": {},
 }
 
 
@@ -34,7 +38,8 @@ async def get_page(competition):
         competition["sport"] in competition_urls
         and competition["competition"] in competition_urls[competition["sport"]]
     ):
-        url = competition_urls[competition["sport"]][competition["competition"]]
+        id = competition_urls[competition["sport"]][competition["competition"]]
+        url = get_url(id)
     else:
         return None
     async with get_session().get(
@@ -52,6 +57,8 @@ async def get_games(competition):
     if json is None:
         return None
     games = []
+    if len(json["Result"]["Items"]) == 0:
+        return
     game_elements = json["Result"]["Items"][0]["Events"]
     for el in game_elements:
         items = el["Items"]
