@@ -7,8 +7,8 @@ import bookmakers.justbit as justbit
 import bookmakers.cloudbet as cloudbet
 import bookmakers.everygame as everygame
 import bookmakers.betcoin as betcoin
-
-# import bookmakers.sportsbetio as sportsbetio
+import bookmakers.sportsbetio as sportsbetio
+import bookmakers.spinbet as spinbet
 import bookmakers.kineko as kineko
 import bookmakers.vave3 as vave3
 import bookmakers.betsio as betsio
@@ -18,6 +18,7 @@ import bookmakers.bet7 as bet7
 import bookmakers.bitsler as bitsler
 import bookmakers.thunderpick as thunderpick
 import bookmakers.ivibets as ivibets
+import bookmakers.bet20 as bet20
 import arb
 import sys
 import log
@@ -75,9 +76,19 @@ async def get_competition_games(name, exchange, competition):
     return None
 
 
+## Notes
+## bet20 ivibets, vave3 have the same odds
+
+# spinbet,s take and sportsbetio also have the same odds
+
+
 async def check_competition(competition):
     now = time.time()
     results = await asyncio.gather(
+        get_competition_games("bet20", bet20, competition),
+        get_competition_games("spinbet", spinbet, competition),
+        get_competition_games("sportsbetio", sportsbetio, competition),
+        # # # get_competition_games("stake", stake, competition)
         get_competition_games("betcoin", betcoin, competition),
         get_competition_games("everygame", everygame, competition),
         get_competition_games("ivibets", ivibets, competition),
@@ -86,8 +97,8 @@ async def check_competition(competition):
         get_competition_games("kineko", kineko, competition),
         get_competition_games("trustdice", trustdice, competition),
         get_competition_games("betplay", betplay, competition),
-        # get_competition_games("jackbit", freshbet, competition),
-        get_competition_games("stake", stake, competition),
+        # # # get_competition_games("jackbit", freshbet, competition),
+        # # # get_competition_games("stake", stake, competition), # same as sportsbetio and spinbet
         get_competition_games("vave3", vave3, competition),
         get_competition_games("jazz", jazz, competition),
         get_competition_games("xbit1", xbit1, competition),
