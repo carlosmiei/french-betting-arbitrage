@@ -19,6 +19,7 @@ import bookmakers.bitsler as bitsler
 import bookmakers.thunderpick as thunderpick
 import bookmakers.ivibets as ivibets
 import bookmakers.bet20 as bet20
+import bookmakers.onexbet as onexbet
 import arb
 import sys
 import log
@@ -85,6 +86,7 @@ async def get_competition_games(name, exchange, competition):
 async def check_competition(competition):
     now = time.time()
     results = await asyncio.gather(
+        get_competition_games("1xbet", onexbet, competition),
         get_competition_games("bet20", bet20, competition),
         get_competition_games("spinbet", spinbet, competition),
         get_competition_games("sportsbetio", sportsbetio, competition),
