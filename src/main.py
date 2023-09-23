@@ -1,4 +1,5 @@
 import bookmakers.stake as stake
+import bookmakers.meltbet as meltbet
 import bookmakers.freshbet as freshbet
 import bookmakers.jackbit as jackbit
 import bookmakers.betplay as betplay
@@ -15,11 +16,13 @@ import bookmakers.betsio as betsio
 import bookmakers.jazz as jazz
 import bookmakers.xbit1 as xbit1
 import bookmakers.bet7 as bet7
+import bookmakers.bet22 as bet22
 import bookmakers.bitsler as bitsler
 import bookmakers.thunderpick as thunderpick
 import bookmakers.ivibets as ivibets
 import bookmakers.bet20 as bet20
 import bookmakers.onexbet as onexbet
+import bookmakers.megapari as megapari
 import arb
 import sys
 import log
@@ -86,6 +89,9 @@ async def get_competition_games(name, exchange, competition):
 async def check_competition(competition):
     now = time.time()
     results = await asyncio.gather(
+        get_competition_games("megapari", megapari, competition),
+        get_competition_games("meltbet", meltbet, competition),
+        get_competition_games("bet22", bet22, competition),
         get_competition_games("1xbet", onexbet, competition),
         get_competition_games("bet20", bet20, competition),
         get_competition_games("spinbet", spinbet, competition),
